@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{brooks:mythical}
+F.~Brooks.
+\newblock {\em The Mythical Man-Month}.
+\newblock Addison-Wesley, 1975.
+
+\bibitem{cataldo:identification}
+M.~Cataldo.
+\newblock Identification of coordination requirements: implications for the
+  design of collaboration and awareness tools.
+\newblock {\em CSCW}, pages 353--362, May-June 2006.
+
+\bibitem{damian:awareness}
+D.~Damian.
+\newblock Awareness in the wild: Why communication breakdowns occur.
+\newblock pages 81--90, 2007.
+
+\bibitem{datta:pentropy}
+S.~Datta.
+\newblock Project-entropy: A metric to understand resource allocation dynamics
+  across software projects.
+
+\bibitem{kwan:stechnical}
+I.~Kwan.
+\newblock Does socio-technical congruence have an effect on software build
+  success? a study of coordination in a software project.
+\newblock {\em IEEE Transactions on Software Engineering}, 37(3):307--324,
+  May-June 2011.
+
+\end{thebibliography}

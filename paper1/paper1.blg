@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: paper1.aux
+The style file: abbrv.bst
+Database file #1: paper1.bib
+Warning--empty journal in damian:awareness
+Warning--empty journal in datta:pentropy
+Warning--empty year in datta:pentropy
+You've used 5 entries,
+            2118 wiz_defined-function locations,
+            524 strings with 4398 characters,
+and the built_in function-call counts, 1444 in all, are:
+= -- 141
+> -- 35
+< -- 2
++ -- 16
+- -- 10
+* -- 80
+:= -- 235
+add.period$ -- 14
+call.type$ -- 5
+change.case$ -- 19
+chr.to.int$ -- 0
+cite$ -- 8
+duplicate$ -- 71
+empty$ -- 128
+format.name$ -- 10
+if$ -- 315
+int.to.chr$ -- 0
+int.to.str$ -- 5
+missing$ -- 6
+newline$ -- 27
+num.names$ -- 10
+pop$ -- 28
+preamble$ -- 1
+purify$ -- 15
+quote$ -- 0
+skip$ -- 54
+stack$ -- 0
+substring$ -- 95
+swap$ -- 19
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 18
+warning$ -- 3
+while$ -- 15
+width$ -- 6
+write$ -- 51
+(There were 3 warnings)

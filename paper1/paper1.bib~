@@ -1,0 +1,30 @@
+@BOOK{brooks:mythical,
+	AUTHOR = "Frederick Brooks",
+	TITLE = "The Mythical Man-Month",
+	PUBLISHER = "Addison-Wesley",
+	YEAR = "1975"	}
+@ARTICLE{datta:pentropy,
+	AUTHOR = "Subhajit Datta",
+	TITLE = "Project-entropy: A Metric to Understand Resource Allocation Dynamics across Software Projects"    }
+@ARTICLE{kwan:stechnical,
+	AUTHOR = "I. Kwan",
+	TITLE = "Does socio-technical congruence have an effect on software build success? A study of coordination in a software project",
+	JOURNAL = "IEEE Transactions on Software Engineering",
+	VOLUME = {37},
+	NUMBER = {3},
+	PAGES = {307-324},
+	MONTH = "May-June",
+	YEAR = {2011}	}
+@ARTICLE{cataldo:identification,
+	AUTHOR = "M. Cataldo",
+	TITLE = "Identification of coordination requirements: implications for the design of collaboration and awareness tools",
+	JOURNAL = "CSCW",
+	PAGES = {353-362},
+	MONTH = "May-June",
+	YEAR = {2006}	}
+@ARTICLE{damian:awareness,
+	AUTHOR = "D. Damian",
+	TITLE = "Awareness in the Wild: Why Communication Breakdowns Occur",
+	BOOKTITLE = "International Conference on Global Software Engineering",
+	PAGES = {81-90},
+	YEAR = {2007}	}

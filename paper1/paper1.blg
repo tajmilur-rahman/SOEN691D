@@ -2,48 +2,48 @@ This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
 The top-level auxiliary file: paper1.aux
 The style file: abbrv.bst
 Database file #1: paper1.bib
-Warning--empty journal in damian:awareness
-Warning--empty journal in datta:pentropy
-Warning--empty year in datta:pentropy
-You've used 5 entries,
+Warning--empty journal in 5_damian
+Warning--empty school in 2_datta
+Warning--empty year in 2_datta
+You've used 13 entries,
             2118 wiz_defined-function locations,
-            524 strings with 4398 characters,
-and the built_in function-call counts, 1444 in all, are:
-= -- 141
-> -- 35
-< -- 2
-+ -- 16
-- -- 10
-* -- 80
-:= -- 235
-add.period$ -- 14
-call.type$ -- 5
-change.case$ -- 19
+            579 strings with 5763 characters,
+and the built_in function-call counts, 4189 in all, are:
+= -- 424
+> -- 91
+< -- 9
++ -- 42
+- -- 26
+* -- 241
+:= -- 644
+add.period$ -- 41
+call.type$ -- 13
+change.case$ -- 50
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 71
-empty$ -- 128
-format.name$ -- 10
-if$ -- 315
+cite$ -- 16
+duplicate$ -- 212
+empty$ -- 388
+format.name$ -- 26
+if$ -- 952
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 6
-newline$ -- 27
-num.names$ -- 10
-pop$ -- 28
+int.to.str$ -- 13
+missing$ -- 13
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 64
 preamble$ -- 1
-purify$ -- 15
+purify$ -- 39
 quote$ -- 0
-skip$ -- 54
+skip$ -- 161
 stack$ -- 0
-substring$ -- 95
-swap$ -- 19
-text.length$ -- 2
+substring$ -- 290
+swap$ -- 72
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 18
+type$ -- 50
 warning$ -- 3
-while$ -- 15
-width$ -- 6
-write$ -- 51
+while$ -- 43
+width$ -- 15
+write$ -- 147
 (There were 3 warnings)

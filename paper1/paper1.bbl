@@ -1,31 +1,82 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{brooks:mythical}
+\bibitem{9_hindle}
+R.~C.~H. A.~Hindle, M. W.~Godfrey.
+\newblock Release pattern discovery via partitioning: Methodology and case
+  study.
+\newblock In {\em Proceedings of the Fourth International Workshop on Mining
+  Software Repositories at ICSE Workshops MSR '07}, volume~35, page~19,
+  Minneapolis, MN, USA, 2007. MSR.
+
+\bibitem{8_boehm}
+B.~Boehm.
+\newblock Get ready for agile methods, with care.
+\newblock {\em ACM Computer}, 35(1):64--69, 2002.
+
+\bibitem{6_boehm}
+B.~W. Boehm.
+\newblock Software risk management: Principles and practices.
+\newblock {\em IEEE Softw.}, 8(1):32--41, January 1991.
+
+\bibitem{1_brooks}
 F.~Brooks.
 \newblock {\em The Mythical Man-Month}.
 \newblock Addison-Wesley, 1975.
 
-\bibitem{cataldo:identification}
-M.~Cataldo.
-\newblock Identification of coordination requirements: implications for the
-  design of collaboration and awareness tools.
-\newblock {\em CSCW}, pages 353--362, May-June 2006.
-
-\bibitem{damian:awareness}
-D.~Damian.
+\bibitem{5_damian}
+J.~S. Daniel~Damian, L.~Izquierdo.
 \newblock Awareness in the wild: Why communication breakdowns occur.
 \newblock pages 81--90, 2007.
 
-\bibitem{datta:pentropy}
-S.~Datta.
-\newblock Project-entropy: A metric to understand resource allocation dynamics
-  across software projects.
+\bibitem{11_damian}
+K.~I. Daniela~Damian, Helms~Remko.
+\newblock The role of domain knowledge and cross-functional communication in
+  socio-technical coordination.
+\newblock In {\em 35th International Conference on Software Engineering, ICSE},
+  pages 442--451, 2013.
 
-\bibitem{kwan:stechnical}
+\bibitem{12_posnett}
+P.~D. Daryl~Posnett, Raissa~D'Souza.
+\newblock Dual ecological measures of focus in software development.
+\newblock In {\em Proceeding ICSE '13 Proceedings of the 2013 International
+  Conference on Software Engineering}, pages 452--461, 2013.
+
+\bibitem{2_datta}
+S.~Datta.
+\newblock {\em Project-entropy: A Metric to Understand Resource Allocation
+  Dynamics across Software Projects}.
+\newblock PhD thesis.
+
+\bibitem{13_rahman}
+P.~D. F.~Rahman.
+\newblock Ownership, experience and defects: a fine-grained study of
+  authorship.
+\newblock In {\em Proceeding of the 33rd international conference on Software
+  engineering, ACM}, pages 491--500, 2011.
+
+\bibitem{10_cook}
+A.~L.~W. J.~E.~Cook.
+\newblock Automating process discovery through event-data analysis.
+\newblock In {\em Proceedings of the 17th international conference on Software
+  engineering in ICSE ’95}, volume~35, pages 73--82, Seattle, Washington,
+  USA, April 1995. ACM Press.
+
+\bibitem{3_kwan}
 I.~Kwan.
 \newblock Does socio-technical congruence have an effect on software build
   success? a study of coordination in a software project.
 \newblock {\em IEEE Transactions on Software Engineering}, 37(3):307--324,
   May-June 2011.
+
+\bibitem{4_cataldo}
+J.~H. M.~Cataldo, P.~Wagstrom.
+\newblock Identification of coordination requirements: implications for the
+  design of collaboration and awareness tools.
+\newblock {\em CSCW}, pages 353--362, May-June 2006.
+
+\bibitem{7_keil}
+K.~L. M.~Keil, P. E.~Cule.
+\newblock A framework for identifying software project risks.
+\newblock {\em Commun. ACM}, 41(11):76--83, November 1998.
 
 \end{thebibliography}

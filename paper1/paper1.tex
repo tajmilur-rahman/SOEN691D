@@ -1,5 +1,8 @@
 \documentclass{acm_proc_article-sp}
-
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage{booktabs}
 \begin{document}
 
 \title{Re-Allocation of Resources during Releases \titlenote{Copyright information will go here.}}
@@ -29,7 +32,7 @@ This section will be written at the end.
 \terms{Experiment, Human Factors, Resource Management, Reallocation}
 \keywords{Resource Reallocation, Software Releases} % NOT required for Proceedings
 \section{Introduction}
-Software projects are notorious for going over budget and schedule. Rush periods are often gets seen before a major release that turns the developers into dinosaurs as Frederick Brooks likens in his benchmark study "The Mythical Man Month" \cite{1_brooks}. This "Rush To Release (RTR)" can be prompted either by external forces such as decisions by management to include new features in the release or to release earlier to beat a competitor. Alternatively, the rush may simply be due to inappropriate or unrealistic scheduling. Whatever the reason is it is an obvious. Regardless of the causes, the rush to release stresses developers and often requires developers to work on unusual, high priority or critical areas of the system. In this paper we study how RTR effects project organization and introduces technical debt. The key research questions that we expect to answer with our methodology are as follows:
+Software projects are notorious for going over budget and schedule. Rush periods are often get seen before a major release that turn the developers into dinosaurs as Frederick Brooks likens in his benchmark study "The Mythical Man Month" \cite{1_brooks}. This "Rush To Release (RTR)" can be prompted either by external forces such as decisions by management to include new features in the release or to release earlier to beat a competitor. Alternatively, the rush may simply be due to inappropriate or unrealistic scheduling. Whatever the reason is it is an obvious. Regardless of the causes, the rush to release stresses developers and often requires developers to work on unusual, high priority or critical areas of the system. In this paper we study how RTR effects project organization and introduces technical debt. The key research questions that we expect to answer with our methodology are as follows:
 \begin{enumerate}
 \item Do developers work on different areas of the system around the time of release?
 \item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)?
@@ -57,30 +60,133 @@ We went for the VCS of a target project and either mirror the repository or down
 
 \subsection{Partioning Release Numbers}
 We stored the git commit log extracted data into a table named git commit and git revision where all the basic and log information for a particular commit was mentioned in the first table and second one containing which commit belongs to which version of Linux kernel development and change details like path modified, new path created due to the change, how many addition and how many deletion occurred in a particular commit etc. By joining these tables we can easily get the dates of each version and from the version number which is a combination of different types of releases we can get determine which commit belongs to which version and release, and also what type of release that is as well. Figure 1 shows the picture of the data how it looks like.
-
 \begin{figure}
 \centering
 \psfig{file=versions.png, height=1in, width=3in,}
 \caption{Releases extracted from Version}
 \end{figure}
-We are getting the release dates also with every commit record. So we can understand which commit belongs to which version of release, is this a major release or minor or minor. Another information we have captured that is \textbf{rc} which means that the particular commit was for a release candidate.
+
+\begin{lstlisting}
+Find out the release candidates:
+update git_refs_tags set rc = cast(
+  substring(
+    path from
+      position( '-rc' in path )
+        + 3 for 2 
+  ) as integer
+) where path ~ E'-rc';
+\end{lstlisting}
+Find out major release version number:
+\begin{lstlisting}
+update git_refs_tags set major = cast(
+  substring(
+    path, 'v([0-9]+)\.?'
+      ) as integer
+);
+\end{lstlisting}
+Find out minor release version number:
+\begin{lstlisting}
+update git_refs_tags set minor = cast(
+  substring(
+    path, 'v[0-9]+\.([0-9]+)\.?'
+      ) as integer
+);
+\end{lstlisting}
+Find out micro release version number:
+\begin{lstlisting}
+update git_refs_tags set micro = cast(
+  substring(
+    path, 'v[0-9]+\.[0-9]+\.([0-9]+)\-?'
+      ) as integer
+);
+\end{lstlisting}
+
+We are getting the release dates also with every commit record. So we can understand which commit belongs to which version of release, is this a major release or minor or micro. Another information we have captured that is \textbf{rc} which means that the particular commit was for a release candidate.
 
 \subsubsection{Explanation}
-A Linux kernel development release version having maximum length of information looks like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release looks like linuxv2.6.13 it tells us that this particular release is the 13th minor release  under  the 6th major release of kernel version 2. linuxv2.6.13\textbf{-rc1} says that after the 13th minor release been released development for the next release has been started and rc1 is the first candidate on the way to the next release. It doesn't ensure that next release is also going to be another minor release.
+A Linux kernel development release version having maximum length of information looks like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release versioning looks like ``linuxv2.6.13'' it tells us that this particular release is the 13th minor release  under  the 6th major release of kernel version 2. ``linuxv2.6.13\textbf{-rc1}'' says that after the 13th minor release been released development for the next release has been started and rc1 is the first candidate on the way to the next release. It doesn't ensure that next release is also going to be another minor release.
 
 \subsection{Get Time-Span Between Release}
-... ... ...
+Another information that we require is what are the durations of the releases of Linux kernel development. To achieve that we joined the table shown in figure 1 and git\_commit. The following psql query did the job pretty easily for us:
+\begin{lstlisting}
+select
+grt.path as release, grt.major, grt.minor,
+grt.micro, grt.rc, gc.committer_dt
+from
+git_refs_tags grt, git_commit gc
+where
+gc.commit = grt.commit
+order by
+gc.committer_dt
+\end{lstlisting}
+This query gives us all the dates of commit for each and every release, so we can easily find out the duration between two consecutive releases. This information is more important to us because we need to see what is the actual development period and what is the merging or other fixing period within a release time-span and also we need to understand how developers are working, what is the impact of their changes made in the code-base during a particular release period. Table 1 shows a small portion of this information. Preior to calculate the areas of the developers in secion 4.4 we require this information.
+
+\begin{table}[ht]
+\caption{Nonlinear Model Results}	 % title of Table
+\centering 						% used for centering table
+\begin{tabular}{c c c c}				% centered columns (4 columns)
+\hline\hline						%inserts double horizontal lines
+% table heading
+Release & Type & Start Date & End Date \\ [0.5ex]
+\hline 							% single horizontal line
+% inserting body of the table
+linuxv2.6.12-rc2 & rc       & 2005-04-16 & 2005-04-16 \\
+linuxv2.6.12-rc3 & rc       & 2005-04-16 & 2005-04-20 \\
+linuxv2.6.12-rc4 & rc       & 2005-04-20 & 2005-05-07 \\
+linuxv2.6.12-rc5 & rc       & 2005-05-07 & 2005-05-24 \\
+linuxv2.6.12-rc6 & rc       & 2005-05-24 & 2005-06-06 \\
+linuxv2.6.12        & micro & 2005-06-06 & 2005-06-17 \\
+linuxv2.6.13-rc1 & rc       & 2005-06-17 & 2005-06-29 \\
+linuxv2.6.13-rc2 & rc       & 2005-06-29 & 2005-07-05 \\
+linuxv2.6.13-rc3 & rc       & 2005-07-05 & 2005-07-13 \\
+linuxv2.6.13-rc4 & rc       & 2005-07-13 & 2005-07-28 \\
+linuxv2.6.13-rc5 & rc       & 2005-07-28 & 2005-08-02 \\
+linuxv2.6.13-rc6 & rc       & 2005-08-02 & 2005-08-07 \\
+linuxv2.6.13-rc7 & rc       & 2005-08-07 & 2005-08-23 \\
+linuxv2.6.13        & micro & 2005-08-23 & 2005-08-28 \\
+linuxv2.6.14-rc1 & rc       & 2005-08-28 & 2005-09-12 \\
+linuxv2.6.14-rc2 & rc       & 2005-09-12 & 2005-09-19 \\
+linuxv2.6.14-rc3 & rc       & 2005-09-19 & 2005-09-30 \\
+linuxv2.6.14-rc4 & rc       & 2005-09-30 & 2005-10-10 \\
+linuxv2.6.14-rc5 & rc       & 2005-10-10 & 2005-10-20 \\
+[1ex]							% adds vertical space
+\hline 							% inserts single line
+\end{tabular}
+\label{table:nonlin} 				% is used to refer this table in the text
+\end{table}
 
 \subsection{Calculate Developers' Area}
-... ... ...
+Developers are working throughout the release time. Developers' are means the files developers work in. But it doesn't refer the to file itself but to understand which files are being touched by which developers. We see that authors are committing files almost everyday throughout a release. We have the commit log data in our hand and we know what is the duration of each releases (i.e.\ start and end dates). Now it is possible to find out which commits were made for which files by a developer within a given time range of a release.
+
+We select all the release information from the table where we stored the releases with their corresponding time-span. After that we select author name and other relevant information from the joining of ``git\_revision'' and ``git\_commits'' tables for every release. We insert these information into a table named ``dev\_area\_rel'' so that we can use the data for our further analysis.
+
+The following pseudo code may show the path to achieve the desired result in this section:
+
+\begin{algorithm}
+\caption{Calculate Developers Area}
+\begin{algorithmic}
+\REQUIRE $ $\\
+$commit\_date \geq  release\_start\_date$\\
+$commit\_date < release\_end\_date$
+\ENSURE
+\STATE $get all releases$
+
+\WHILE{$prev\_release\_date \leftarrow release\_start\_date and release \leftarrow release\_version$}
+\IF{$release$}
+	\IF{$commit\_date \geq  release\_start\_date$ and $commit\_date < release\_end\_date$}
+		\STATE $select author, path, commits, churn$
+		\STATE $insert data into table dev\_area\_rel$
+	\ENDIF
+\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Finding Code-Area Owners}
 ... ... ...
 
-\subsection{Extracting Data}
-... ... ...
-\subsubsection{Display Equations}
-... ... ... ... ... ...
+\subsection{Jaccard Distance}
+Once we found different releases and the release periods as well we calculate the developers' are to see what changes developers are doing in releases. We also want to know what is the difference being created by making changes between two consecuitive releases. If I explain it more then I can say, developers are working in many different files in a release and may work in a same file again for the next release or releases. 
 
 \section{Conclusions}
 This section will be written at the end.

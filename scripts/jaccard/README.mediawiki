@@ -1,0 +1,23 @@
+==calculate the jaccard between releases==
+
+# get the releases
+# psql db_name -f get_release.sql
+
+# get_directories.sql 
+## want to do it on a per directory basis, so get the directory instead of the file for each change
+
+# calculate the areas in which the devs work
+## ./dev_area_rel.pl config
+## ./dev_area_merge.pl config
+## ./dev_area_dev.pl config
+## ./dev_area_rtr.pl config
+
+# Get the releases with their corresponding duration
+## ./get_release_period.pl config
+
+#calcuate the jaccard (need to review and may be need to rework)
+## ./dev_jac.pl config
+
+
+
+

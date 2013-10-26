@@ -1,0 +1,9 @@
+# ownership.sql
+## This file creates file_info table and stores the information regarding each of 77082 files, number of total commits for each of them, number of developers working for each of them etc.
+
+# ownership_rel.pl (INCOMPLETE)
+## Update the tables with the ownership value for each author and file:
+### dev_area_rel
+### dev_area_merge
+### dev_area_dev
+### dev_area_rtr

@@ -1,0 +1,18 @@
+# add_date.sql
+## add date to git_refs_tags
+
+# Create tables for storing the data for different development periods within an entire release period
+## time_between_release.sql
+## This file prduces three tables merge_meriod, rd_period, rtr_period
+### merge_period stores the start and end date from the date of previous release to the date of rc1 of the current release
+### rd_period stores the start and end date from the date of rc1 of current release to the date of releasing the current one
+### rtr_period (rush to release period) we consider the last segment of the entire release period of time as rtr because the rc begins after around 2 weeks since the last release and end around 5~12 days before pushing the current release on the master branch. So there might have some rush among the developers to meet the deadline to get all the rc together to push them all together to the master. So we are seperating this time period from the last rc date to the date of release of the current one.
+
+# calculates the time between rc1 and the previous release
+## merge_period.pl
+
+# calculates the time between rc1 and the end of release
+## rd_period.pl
+
+# calculates the time between the last rc and the end of release
+## rtr_period.pl

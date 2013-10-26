@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.12)  22 OCT 2013 19:16
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.12)  25 OCT 2013 20:38
 entering extended mode
  %&-line parsing enabled.
 **paper1.tex
@@ -258,7 +258,20 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@thisruleclass=\count125
 \@lastruleclass=\count126
 \@thisrulewidth=\dimen139
-) (./paper1.aux)
+) (./paper1.aux
+
+LaTeX Warning: Label `table:nonlin' multiply defined.
+
+
+LaTeX Warning: Label `table:nonlin' multiply defined.
+
+
+LaTeX Warning: Label `table:nonlin' multiply defined.
+
+
+LaTeX Warning: Label `table:nonlin' multiply defined.
+
+)
 \openout1 = `paper1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -273,8 +286,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
-
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+ (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count127
 \scratchdimen=\dimen140
@@ -301,97 +313,62 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 27.
 
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-)
-
-LaTeX Warning: Citation `1_brooks' on page \thepage  undefined on input line 35
-.
+) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-LaTeX Warning: Citation `2_datta' on page \thepage  undefined on input line 43.
-
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
-
-
-]
-
-LaTeX Warning: Citation `3_kwan' on page \thepage  undefined on input line 47.
-
-
-LaTeX Warning: Citation `4_cataldo' on page \thepage  undefined on input line 4
-7.
-
-
-LaTeX Warning: Citation `5_damian' on page \thepage  undefined on input line 47
-.
-
-
-LaTeX Warning: Citation `6_boehm' on page \thepage  undefined on input line 47.
-
-
-
-LaTeX Warning: Citation `7_keil' on page \thepage  undefined on input line 47.
-
-
-LaTeX Warning: Citation `8_boehm' on page \thepage  undefined on input line 47.
-
-
-
-LaTeX Warning: Citation `9_hindle' on page \thepage  undefined on input line 51
-.
-
-
-LaTeX Warning: Citation `10_cook' on page \thepage  undefined on input line 51.
-
-
-
-LaTeX Warning: Citation `11_damian' on page \thepage  undefined on input line 5
-2.
-
-
-LaTeX Warning: Citation `12_posnett' on page \thepage  undefined on input line 
-52.
-
-
-LaTeX Warning: Citation `13_rahman' on page \thepage  undefined on input line 5
-2.
-
-<versions.png, id=12, 1043.9pt x 325.215pt>
+] <versions.png, id=12, 1043.9pt x 325.215pt>
 File: versions.png Graphic file (type png)
- <use versions.png> [2]
-Underfull \hbox (badness 10000) in paragraph at lines 174--174
+
+<use versions.png> [2] [3 <./versions.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 178--178
 [] []\T1/aer/bx/n/9 while $\OML/cmm/m/it/9 prev[]release[]date \OMS/cmsy/m/n/9 
  
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 3557) in paragraph at lines 178--178
+\OML/cmm/m/it/9 release[]start[]date and release \OMS/cmsy/m/n/9   \OML/cmm/m/i
+t/9 release[]version$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--180
 [] []\T1/aer/bx/n/9 if $\OML/cmm/m/it/9 commit[]date \OMS/cmsy/m/n/9 ^^U \OML/c
 mm/m/it/9 release[]start[]date$ \T1/aer/m/n/9 and
  []
 
-[3 <./versions.png (PNG copy)>] (./paper1.bbl) [4
+[4] (./paper1.bbl
+Overfull \hbox (17.26033pt too wide) in paragraph at lines 58--62
+\T1/aer/m/n/9 https://www.kernel.org/doc/Documentation/development- 
+ []
 
-] (./paper1.aux) ) 
+) [5] [6
+
+] (./paper1.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3735 strings out of 493848
- 46556 string characters out of 1152823
- 122343 words of memory out of 3000000
- 6952 multiletter control sequences out of 15000+50000
- 48962 words of font info for 64 fonts, out of 3000000 for 9000
+ 3741 strings out of 493848
+ 46613 string characters out of 1152823
+ 120429 words of memory out of 3000000
+ 6955 multiletter control sequences out of 15000+50000
+ 51445 words of font info for 67 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 39i,10n,32p,1782b,1296s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8
-a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share
-/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts
-/type1/urw/times/utmri8a.pfb>
-Output written on paper1.pdf (4 pages, 205297 bytes).
+ 39i,10n,32p,1780b,1399s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/am
+sfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cms
+y9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr
+/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texl
+ive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/u
+rw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb
+>
+Output written on paper1.pdf (6 pages, 236099 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 59 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

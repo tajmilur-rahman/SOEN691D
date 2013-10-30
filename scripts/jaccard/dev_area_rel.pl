@@ -57,7 +57,6 @@ my($prev_date, $prev_release) = $get_release_dates->fetchrow_array;
 
 while ( my($date, $release) = $get_release_dates->fetchrow_array) {
 	print "$release -- $prev_date --  $date\n";
-
 	$dev_area->execute($release, $prev_date, $date) or die; 
 
 	$prev_date = $date;

@@ -7,7 +7,8 @@ create table dev_area_rel (
 	path text,
 	commits numeric,
 	churn numeric,
-	ownership numeric
+	ownership numeric,
+	PRIMARY KEY (author, release, path)
 );
 
 drop table if exists dev_area_merge;
@@ -17,7 +18,8 @@ create table dev_area_merge (
 	path text,
 	commits numeric,
 	churn numeric,
-	ownership numeric
+	ownership numeric,
+	PRIMARY KEY (author, release, path)
 );
 
 drop table if exists dev_area_dev;
@@ -27,7 +29,8 @@ create table dev_area_dev (
 	path text,
 	commits numeric,
 	churn numeric,
-	ownership numeric
+	ownership numeric,
+	PRIMARY KEY (author, release, path)
 );
 
 drop table if exists dev_area_rtr;
@@ -37,7 +40,8 @@ create table dev_area_rtr (
 	path text,
 	commits numeric,
 	churn numeric,
-	ownership numeric
+	ownership numeric,
+	PRIMARY KEY (author, release, path)
 );
 
 drop table if exists rel_jac_dist;

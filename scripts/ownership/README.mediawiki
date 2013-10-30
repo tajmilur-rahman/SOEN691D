@@ -1,9 +1,13 @@
-# ownership.sql
-## This file creates file_info table and stores the information regarding each of 77082 files, number of total commits for each of them, number of developers working for each of them etc.
+== Calculating File Ownership
+
+# file_info.sql
+## This file creates file_info table.
+
+# file_info.pl stores the information of all the files for every releases. Contains: file path, release, number of total commits, number of developers, total commits, total churns, first change, last change.
 
 # ownership_rel.pl (INCOMPLETE)
 ## Update the tables with the ownership value for each author and file:
-### dev_area_rel
+### dev_area_rel -- DONE [Calculated ownership for developers in releases. Churn and Commits both are in consideration]
 ### dev_area_merge
 ### dev_area_dev
 ### dev_area_rtr

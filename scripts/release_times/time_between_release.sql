@@ -1,4 +1,13 @@
 \set ECHO all
+
+drop table if exists rel_period;
+create table rel_period (
+	release text,
+	type text,
+        start_date date,
+        end_date date
+);
+
 drop table if exists merge_period;
 create table merge_period (
 	release text,

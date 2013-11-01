@@ -32,13 +32,12 @@ while ( my($release, $major, $minor, $micro, $rc_date) = $query1->fetchrow_array
 	my $release_date = $query2->fetchrow_array;
 	
 	if(defined $release_date){
-		my $release = 'linuxv'.$major.'.'.$minor.'.'.$micro;
 		print "$release -- $rc_date -- $release_date\n";
 		$insert->execute($release, $major, $minor, $micro, $rc_date, $release_date);
 	}
 }
 
-$update = $dbh_ref->prepare(q{update rd_period set days = extract(epoch from rel_date - rc_date)/86400});
+my $update = $dbh_ref->prepare(q{update rd_period set days = extract(epoch from rel_date - rc_date)/86400});
 $update->execute;
 
 $query1->finish;

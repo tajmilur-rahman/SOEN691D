@@ -48,9 +48,9 @@ my $end_date = '';
 my ($query,$query_handler) = '';
 my $type = '';
 
-$get_release_dates->bind_columns(undef, \$release, \$major, \$minor, \$micro, \$rc, \$release_date);
+#$get_release_dates->bind_columns(undef, \$release, \$major, \$minor, \$micro, \$rc, \$release_date);
 
-while ( $get_release_dates->fetchrow_array ){
+while ( my($release, $major, $minor, $micro, $rc, $release_date) = $get_release_dates->fetchrow_array ){
 	print "$release :: $major - $minor - ".($micro ? $micro : "")." - ".($rc ? $rc : "")." - $release_date\n";
 	if(!$rc){
 		if($micro){
@@ -68,7 +68,8 @@ while ( $get_release_dates->fetchrow_array ){
 	$end_date = $release_date;
 	$start_date = $prev_release_date ? $prev_release_date : $release_date;
 
-	$query = "insert into git_rel_period(release, type, start_date, end_date) values('".$release."','".$type."','".$start_date."','".$end_date."')";
+	$query = "insert into rel_period(release, type, start_date, end_date) values('".$release."','".$type."','".$start_date."','".$end_date."')";
+
 	$query_handler = $dbh_ref->prepare($query);
 	$query_handler->execute() or die('Could not insert into git_rel_period');
 	

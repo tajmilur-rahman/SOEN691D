@@ -1,13 +1,115 @@
-== Calculating File Ownership
+==Calculating Ownerships==
 
 # file_info.sql
 ## This file creates file_info table.
 
 # file_info.pl stores the information of all the files for every releases. Contains: file path, release, number of total commits, number of developers, total commits, total churns, first change, last change.
+## There are 77082 distinct files in git_revision table that we are dealing with.
+## Total record in fine_info table is 365788
 
-# ownership_rel.pl (INCOMPLETE)
-## Update the tables with the ownership value for each author and file:
-### dev_area_rel -- DONE [Calculated ownership for developers in releases. Churn and Commits both are in consideration]
-### dev_area_merge
-### dev_area_dev
-### dev_area_rtr
+# ownership_rel.pl
+## Updated the table dev_area_rel with the ownership value for each author for every files worked on.
+## After applying the operation we found ownerships for 582772 records form release 2.6.13 to 3.11 and for 14623 records only for the release 2.6.18. There were 1967 records having ownership 0 in total and only 4 records having ownership 0 in release 2.6.18.
+## Calculated ownership for developers in releases. Churn and Commits both are in consideration
+### Observed in a release 2.6.18.
+### In the release period 2.6.18 there are total 8 files didn't have any churn made by any one ever. They where just committed.
+### In release 2.6.18, 4 developers had ownership 0 for 4 different files those were committed by them.
+
+           author          |                    path                    | churn 
+---------------------------+--------------------------------------------+-------
+ Kim Phillips              | arch/powerpc/configs/mpc834x_mds_defconfig |   0
+ Jeff Garzik               | drivers/ata/libata-sff.c                   |   0
+ Jeremy Fitzhardinge       | include/asm-i386/mach-visws/setup_arch.h   |   0
+ Linus Torvalds            | sound/ppc/toonie.c                         |   0
+[select author,path,churn from dev_area_rel where release = 'linuxv2.6.18' and ownership = 0;]
+
+### We found Jeff Garzik worked in 352 files in the release period for 2.6.18 among them 1 file have this situation (i.e. no churn by Jeff Garzik even no churn by any one else ever).
+
+   release    |            path            | churn | ownership | churn 
+--------------+----------------------------+-------+-----------+-------
+ linuxv2.6.18 | drivers/ata/sata_promise.h |     0 |   100.00  |   0
+
+[select dr.release,dr.path,dr.churn,dr.ownership,fi.churn from dev_area_rel dr, file_info fi where dr.path=fi.path and dr.author like 'Jeff Garzik <%' and fi.churn = 0 and dr.release = 'linuxv2.6.18' and fi.release='linuxv2.6.18' group by dr.release,dr.path,dr.churn,dr.ownership,fi.churn;]
+
+In this case although churn made by Garzik is 0, he got 100% ownership for the file because all the commits were made by Jeff Garzik.
+
+### Now let's see why Jef Garzik got ownership 0% for the file drivers/ata/libata-sff.c
+    author   |         path             | commits| churn | ownership
+-------------+--------------------------+--------+-------+-----------
+ Jeff Garzik | drivers/ata/libata-sff.c |   1    |   0   |   0.00
+ Tejun Heo   | drivers/ata/libata-sff.c |   1    |   2   | 100.00
+
+It's very simple, Tejuan Heo has made all 2 churns for this file so he deserves 100% ownership for this file because we are considering ownership mainly on the basis of churn, if total churn is 0 for that file, i.e. no one made any change ever for that file during a particular release then we are looking at number of commits and who made the commit.
+
+# ownership_merge.pl
+## Updates the table dev_area_merge with the ownership value for each author for every files worked on.
+## Calculated ownership for developers in between the date of previous release and first rc data of the next release.
+
+# ownership_dev.pl
+## Updates the table dev_area_dev with the ownership value for each author for every files worked on within the development period of time in a release time. First rc date to the date of next release.
+
+# ownership_rtr.pl
+## Updates the table dev_area_rtr with the ownership value for each author for every files worked on just before the release after rc releases are done for the release and waiting for a stable release.
+
+
+'''Does Ownership Vary Among MP, RDP, RTR ?'''
+
+=== Summary for each data set: ===
+==== Summary for release 2.6.18 ====
+# Developers' area in merge period (dev_area_merge)
+## Total records in the release 2.6.18 is: 11222
+## 7237 distinct files have been worked in during the merge period of this release
+## 4784 files had more than 80% ownership for it's author
+## Total 597 developers worked in this merge period of release 2.6.18
+## Percentage of ownerships(>80) is: '''66.1%'''
+
+# Developers' area in development period (dev_area_dev)
+## Total records in the release 2.6.18 is: 4193
+## 3154 different files have been worked in during the development period of this release
+[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18';]
+## 1444 files had more than 80% ownership for it's author
+[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80]
+## Total 573 developers worked in this development period of release 2.6.18
+[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80;]
+## Percentage of ownerships(>80) is: '''45.7%'''
+
+# Developers' area in development period (dev_area_rtr)
+## Total records in the release 2.6.18 is: 562
+## 518 different files have been worked in during the rtr period of this release
+[select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18';]
+## 205 files had more than 80% ownership for it's author
+[select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18' and ownership>80]
+## Total 23 developers worked in this merge period of release 2.6.18
+[select count(distinct author) from dev_area_rtr where release = 'linuxv2.6.18' and ownership>80;]
+## Percentage of ownerships(>80) is: '''55%'''
+
+==== Let's look at another release 3.0: ====
+# Developers' area in merge period (dev_area_merge)
+## Total records in the release 3.0 is: 4363
+## 3428 distinct files have been worked in during the merge period of this release
+[select count(distinct path) from dev_area_merge where release = 'linuxv3.0';]
+## 2263 files had more than 80% ownership for it's author
+[select count(distinct path) from dev_area_merge where release = 'linuxv3.0' and ownership>80;]
+## Total 584 developers worked in this merge period of release 3.0
+[select count(distinct author) from dev_area_merge where release = 'linuxv3.0';]
+## Percentage of ownerships(>80) is: '''66.01%'''
+
+# Developers' area in development period (dev_area_dev)
+## Total records in the release 3.0 is: 10187
+## 6827 different files have been worked in during the development period of this release
+[select count(distinct path) from dev_area_dev where release = 'linuxv3.0';]
+## 5030 files had more than 80% ownership for it's author
+[select count(distinct path) from dev_area_dev where release = 'linuxv3.0' and ownership>80;]
+## Total 1054 developers worked in this development period of release 3.0
+[select count(distinct author) from dev_area_dev where release = 'linuxv3.0';]
+## Percentage of ownerships(>80) is: '''73.67%'''
+
+# Developers' area in development period (dev_area_rtr)
+## Total records in the release 3.0 is: 2701
+## 2172 different files have been worked in during the rtr period of this release
+[select count(distinct path) from dev_area_rtr where release = 'linuxv3.0';]
+## 1267 files had more than 80% ownership for it's author
+[select count(distinct path) from dev_area_rtr where release = 'linuxv3.0' and ownership>80;]
+## Total 381 developers worked in this merge period of release 2.6.18
+[select count(distinct author) from dev_area_rtr where release = 'linuxv3.0';]
+## Percentage of ownerships(>80) is: '''58.33%'''

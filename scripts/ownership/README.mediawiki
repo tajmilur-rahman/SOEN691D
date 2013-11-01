@@ -55,61 +55,50 @@ It's very simple, Tejuan Heo has made all 2 churns for this file so he deserves 
 '''Does Ownership Vary Among MP, RDP, RTR ?'''
 
 === Summary for each data set: ===
+
 ==== Summary for release 2.6.18 ====
-# Developers' area in merge period (dev_area_merge)
+# Developers' area in '''merge period''' (dev_area_merge)
 ## Total records in the release 2.6.18 is: 11222
 ## 7237 distinct files have been worked in during the merge period of this release
 ## 4784 files had more than 80% ownership for it's author
 ## Total 597 developers worked in this merge period of release 2.6.18
-## Percentage of ownerships(>80) is: '''66.1%'''
+## Percentage of file-owners (w is >80) working on file is: '''66.1%'''
 
-# Developers' area in development period (dev_area_dev)
+# Developers' area in '''development period''' (dev_area_dev)
 ## Total records in the release 2.6.18 is: 4193
-## 3154 different files have been worked in during the development period of this release
-[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18';]
-## 1444 files had more than 80% ownership for it's author
-[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80]
-## Total 573 developers worked in this development period of release 2.6.18
-[select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80;]
-## Percentage of ownerships(>80) is: '''45.7%'''
+## 3154 different files have been worked in during the development period of this release [select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18';]
+## 1444 files had more than 80% ownership for it's author [select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80]
+## Total 573 developers worked in this development period of release 2.6.18 [select count(distinct path) from dev_area_dev where release = 'linuxv2.6.18' and ownership>80;]
+## Percentage of file-owners (w is >80) working on file is: '''45.7%'''
 
-# Developers' area in development period (dev_area_rtr)
+# Developers' area in '''rtr period''' (dev_area_rtr)
 ## Total records in the release 2.6.18 is: 562
-## 518 different files have been worked in during the rtr period of this release
-[select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18';]
-## 205 files had more than 80% ownership for it's author
-[select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18' and ownership>80]
-## Total 23 developers worked in this merge period of release 2.6.18
-[select count(distinct author) from dev_area_rtr where release = 'linuxv2.6.18' and ownership>80;]
-## Percentage of ownerships(>80) is: '''55%'''
+## 518 different files have been worked in during the rtr period of this release [select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18';]
+## 205 files had more than 80% ownership for it's author [select count(distinct path) from dev_area_rtr where release = 'linuxv2.6.18' and ownership>80]
+## Total 87 developers worked in this rtr period of release 2.6.18 [select count(distinct author) from dev_area_rtr where release = 'linuxv2.6.18']
+## Percentage of file-owners (w is >80) working on file is: '''39.5%'''
 
-==== Let's look at another release 3.0: ====
-# Developers' area in merge period (dev_area_merge)
+==== Summary for release 3.0: ====
+# Developers' area in '''merge period''' (dev_area_merge)
 ## Total records in the release 3.0 is: 4363
-## 3428 distinct files have been worked in during the merge period of this release
-[select count(distinct path) from dev_area_merge where release = 'linuxv3.0';]
-## 2263 files had more than 80% ownership for it's author
-[select count(distinct path) from dev_area_merge where release = 'linuxv3.0' and ownership>80;]
-## Total 584 developers worked in this merge period of release 3.0
-[select count(distinct author) from dev_area_merge where release = 'linuxv3.0';]
-## Percentage of ownerships(>80) is: '''66.01%'''
+## 3428 distinct files have been worked in during the merge period of this release [select count(distinct path) from dev_area_merge where release = 'linuxv3.0';]
+## 2263 files had more than 80% ownership for it's author [select count(distinct path) from dev_area_merge where release = 'linuxv3.0' and ownership>80;]
+## Total 584 developers worked in this merge period of release 3.0 [select count(distinct author) from dev_area_merge where release = 'linuxv3.0';]
+## Percentage of file-owners (w is >80) working on file is: '''66.01%'''
 
-# Developers' area in development period (dev_area_dev)
+# Developers' area in '''development''' period (dev_area_dev)
 ## Total records in the release 3.0 is: 10187
-## 6827 different files have been worked in during the development period of this release
-[select count(distinct path) from dev_area_dev where release = 'linuxv3.0';]
-## 5030 files had more than 80% ownership for it's author
-[select count(distinct path) from dev_area_dev where release = 'linuxv3.0' and ownership>80;]
-## Total 1054 developers worked in this development period of release 3.0
-[select count(distinct author) from dev_area_dev where release = 'linuxv3.0';]
-## Percentage of ownerships(>80) is: '''73.67%'''
+## 6827 different files have been worked in during the development period of this release [select count(distinct path) from dev_area_dev where release = 'linuxv3.0';]
+## 5030 files had more than 80% ownership for it's author [select count(distinct path) from dev_area_dev where release = 'linuxv3.0' and ownership>80;]
+## Total 1054 developers worked in this development period of release 3.0 [select count(distinct author) from dev_area_dev where release = 'linuxv3.0';]
+## Percentage of file-owners (w is >80) working on file is: '''73.67%'''
 
-# Developers' area in development period (dev_area_rtr)
+# Developers' area in '''rtr''' period (dev_area_rtr)
 ## Total records in the release 3.0 is: 2701
-## 2172 different files have been worked in during the rtr period of this release
-[select count(distinct path) from dev_area_rtr where release = 'linuxv3.0';]
-## 1267 files had more than 80% ownership for it's author
-[select count(distinct path) from dev_area_rtr where release = 'linuxv3.0' and ownership>80;]
-## Total 381 developers worked in this merge period of release 2.6.18
-[select count(distinct author) from dev_area_rtr where release = 'linuxv3.0';]
-## Percentage of ownerships(>80) is: '''58.33%'''
+## 2172 different files have been worked in during the rtr period of this release [select count(distinct path) from dev_area_rtr where release = 'linuxv3.0';]
+## 1267 files had more than 80% ownership for it's author [select count(distinct path) from dev_area_rtr where release = 'linuxv3.0' and ownership>80;]
+## Total 381 developers worked in this rtr period of release 2.6.18 [select count(distinct author) from dev_area_rtr where release = 'linuxv3.0';]
+## Percentage of file-owners (w is >80) working on file is: '''58.33%'''
+
+
+''' we see that during the rush period in a release period more developers work in files that they do not own (i.e. they have ownership for the file less than 80%)'''

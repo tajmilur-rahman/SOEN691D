@@ -1,22 +1,30 @@
-==calculate the jaccard between releases==
+== Calculate Jaccard Distance ==
 
 # get the releases
 # psql db_name -f get_release.sql
 
-# get_directories.sql 
-## want to do it on a per directory basis, so get the directory instead of the file for each change
+=== Calculate the Areas where the Developers Work ===
 
-# calculate the areas in which the devs work
-## ./dev_area_rel.pl config
-## ./dev_area_merge.pl config
-## ./dev_area_dev.pl config
-## ./dev_area_rtr.pl config
+# ./dev_area_rel.pl config
+# ./dev_area_merge.pl config
+# ./dev_area_dev.pl config
+# ./dev_area_rtr.pl config
 
 # Get the releases with their corresponding duration
 ## ./get_release_period.pl config
 
-#calcuate the jaccard (need to review and may be need to rework)
-## ./dev_jac.pl config
+#calcuate the jaccard between each stable release
+## ./jac_dist_rel.pl config
+
+=== Calculate Jaccard Distance within a Release Period ===
+
+Tables jac_dist_rel and jac_dist should be created after running dev_area.sql
+
+# jac_dist_rel.pl
+## We are storing jaccard distance between different releases in the table '''jac_dist_rel'''
+# jac_dist.pl
+## We are storing the jaccard distance between different segments within a release period in the table '''jac_dist'''
+
 
 
 

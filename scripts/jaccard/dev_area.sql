@@ -44,9 +44,17 @@ create table dev_area_rtr (
 	PRIMARY KEY (author, release, path)
 );
 
-drop table if exists rel_jac_dist;
-create table rel_jac_dist (
+drop table if exists jac_dist_rel;
+create table jac_dist_rel (
 	release1 text,
 	release2 text,
 	jac_dist numeric
 );
+drop table if exists jac_dist;
+create table jac_dist (
+	release text,
+	jd_merge_dev numeric,
+	jd_dev_rtr numeric,
+	jd_merge_rtr numeric
+);
+

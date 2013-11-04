@@ -335,11 +335,68 @@ Randy Dunlap			& 2.6.24		& ...\_core.c 		& 100.00\\
 \end{table}
 The example given above is calculated for the developers worked for different files in different releases. Ownership is calculated for all the developers in release periods. In the same way we have calculated what is the ownership value for a developer to a particular file in the merge period (MP) in a release, development period (RDP) in a release and RTR period ind a release.
 
-\subsection{Jaccard Distance}
-Once we found different releases and the release periods as well we calculate the developers' are to see what changes developers are doing in releases. We also want to know what is the difference being created by making changes between two consecuitive releases. If I explain it more then I can say, developers are working in many different files in a release and may work in a same file again for the next release or releases. 
-
 \section{Preliminary Results}
-In this section we present results from several quantitative analysis of the archival data from the Linux Kernel development project. The measures we derive from these data are well-suited to address our research questions.
+In this section we present results from several quantitative analysis of the archival data from the Linux Kernel development project. The measures we derive from these data are well-suited to answer our research questions. Once we found different releases and the release periods as well as we calculate the work areas and code ownerships for developers we also want to know what is the difference being created by making changes between two consecutive releases. We want to see what is the difference among the releases also among the different sections MP, RDP, RTR in a release period. To observe this we want to calculate the difference using Jaccard Similarity Coefficient \cite{17_jaccard} which is represented by the following equation.
+\begin{equation} J(A, B) =\frac{|A \cap B|}{|A \cup B|} \end{equation}
+So the Jaccard Distance can be obtained by subtracting the Jaccard coefficient from 1.
+\begin{equation} d_j(A, B) = 1 - J(A, B) = \frac{|A \cup B|-|A \cap B|}{|A \cup B|} \end{equation}
+Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for in a particular release as the set A and files worked for in another release is set B. We found that Jaccard distance between two consecutive releases are not too high. For example jaccard bwteen release ``linuxv2.6.13'' and ``linuxv2.6.14'' is 0.925446 and bwteen ``linuxv2.6.14'' and ``linuxv2.6.15'' is 0.9191968. The higest Jaccard distance we have measured is 0.940 which is between 2.6.20 and 2.6.21 on the other hand the lowest distance is 0.906 between 2.6.30 and 2.6.31. Table 7 shows some Jaccard distances for release pairs and in Table 8 we see the Jaccard distance within the same releases between different perilds MP, RDP and RTR.
+
+\begin{table}[ht]
+\caption{Jaccard Distance between Releases}  % title of Table
+\centering 						% used for centering table
+\begin{tabular}{c c c}				% centered columns (3 columns)
+\hline\hline						%inserts double horizontal lines
+% table heading
+From 				& To		& Jaccard Distance	\\ [0.5ex]
+\hline 							% single horizontal line
+% inserting body of the table
+linuxv2.6.13			& linuxv2.6.14		& 0.925446	\\
+linuxv2.6.14			& linuxv2.6.15		& 0.919196	\\
+linuxv2.6.15			& linuxv2.6.16		& 0.917945	\\
+linuxv2.6.16			& linuxv2.6.17		& 0.916900 	\\
+linuxv2.6.17			& linuxv2.6.18		& 0.929941 	\\
+linuxv2.6.18			& linuxv2.6.19		& 0.937535	\\
+linuxv2.6.19			& linuxv2.6.20		& 0.935265 	\\
+linuxv2.6.20			& linuxv2.6.21		& 0.940366 	\\
+linuxv2.6.21			& linuxv2.6.22		& 0.920760 	\\
+linuxv2.6.22			& linuxv2.6.23		& 0.921652 	\\
+linuxv2.6.23			& linuxv2.6.24		& 0.929194 	\\
+linuxv2.6.24			& linuxv2.6.25		& 0.910464 	\\
+[1ex]							% adds vertical space
+\hline 							% inserts single line
+\end{tabular}
+\label{table:nonlin} 				% is used to refer this table in the text
+\end{table}
+
+\begin{table}[ht]
+\caption{Jaccard Distance between Releases}  % title of Table
+\centering 						% used for centering table
+\begin{tabular}{c c c c}				% centered columns (4 columns)
+\hline\hline						%inserts double horizontal lines
+% table heading
+Release 				& J(MP, RDP)		& J(RDP, RTR)	& J(MP, RTR)	\\ [0.5ex]
+\hline 							% single horizontal line
+% inserting body of the table
+linuxv2.6.13			& 0.952060		& 0.921850		& 0.996786 \\
+linuxv2.6.14			& 0.958213		& 0.839313		& 0.988072 \\
+linuxv2.6.15			& 0.947005		& 0.936153		& 0.996408 \\
+linuxv2.6.16			& 0.949774		& 0.919361 		& 0.991275 \\
+linuxv2.6.17			& 0.938539		& 0.835925 		& 0.971014 \\
+linuxv2.6.18			& 0.946127		& 0.865967		& 0.990750 \\
+linuxv2.6.19			& 0.960241		& 0.845649 		& 0.993054 \\
+linuxv2.6.20			& 0.967823		& 0.804856 		& 0.995071 \\
+linuxv2.6.21			& 0.941798		& 0.835575 		& 0.989031 \\
+linuxv2.6.22			& 0.947115		& 0.928818 		& 0.997208 \\
+linuxv2.6.23			& 0.939658		& 0.909090 		& 0.995797 \\
+linuxv2.6.24			& 0.946806		& 0.871875 		& 0.989284 \\
+[1ex]							% adds vertical space
+\hline 							% inserts single line
+\end{tabular}
+\label{table:nonlin} 				% is used to refer this table in the text
+\end{table}
+
+In table 8 last three columns representing the Jaccard distance between merge period and release development period, between release development and rush to release period, between merge period and rush to release period respectively.
 
 \section{Conclusions}
 This section will be written at the end.

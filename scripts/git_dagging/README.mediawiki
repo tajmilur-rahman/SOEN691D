@@ -1,0 +1,22 @@
+== Tracking down all commits from all branches ==
+
+To understand which commit belongs to which release
+
+Steps:
+01. start from a new commit id of a release (R1)
+02. store it in git_commit_release (newly created table)
+03. check if it has a parent
+04. -- if has parent then
+05. -- -- check if the parent is already stored
+06. -- -- -- if stored then
+07. -- -- -- -- check the release number is older than R1
+08. -- -- -- -- -- if NOT older then update release number with the older one
+09. -- -- -- -- -- end if
+10. -- -- -- end if
+11. -- -- -- if parent already not stored
+12. -- -- -- -- store parent
+13. -- -- -- end if
+14. -- -- -- repeat 3 with commit id = parent id
+15. -- if no parent repeat 1
+16. -- end if
+16. end if

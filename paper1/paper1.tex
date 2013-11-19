@@ -3,6 +3,7 @@
 \usepackage{algorithm}
 \usepackage{listings}
 \usepackage{booktabs}
+\usepackage{graphicx}
 \begin{document}
 
 \title{Re-Allocation of Resources during Releases \titlenote{Copyright note}}
@@ -32,19 +33,30 @@ This section will be written at the end.
 \terms{Experiment, Human Factors, Resource Management, Reallocation}
 \keywords{Resource Reallocation, Code Ownership, Defect Density, Software Releases} % NOT required for Proceedings
 \section{Introduction}
-Software projects are notorious for going over budget and schedule. Rush periods are often get seen before a major release that turn the developers into dinosaurs as Frederick Brooks likens in his benchmark study "The Mythical Man Month" \cite{brooks_mythical}. This "Rush To Release (RTR)" can be prompted either by external forces such as decisions by management to include new features in the release or to release earlier to beat a competitor. Alternatively, the rush may simply be due to inappropriate or unrealistic scheduling. Whatever the reason is it is an obvious. Regardless of the causes, the rush to release stresses developers and often requires developers to work on unusual, high priority or critical areas of the system. In this paper we study how RTR effects project organization and introduces technical debt. We want to propose a method to observe, analyze and summarize the results of revisions found near release. We intend to infer behavior of the developers related to the process around release time. The key research questions that we expect to answer with our methodology are as follows:
-\begin{enumerate}
-
-\item What is the release process used by the project?
-\item Do developers work on different areas of the system around the time of release?
-\item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)?
-\end{enumerate}
+Software projects are notorious for going over budget and schedule. Rush periods are often get seen before a major release that turn the developers into dinosaurs as Frederick Brooks likens in his benchmark study "The Mythical Man Month" \cite{brooks_mythical}. This "Rush To Release (RTR)" can be prompted either by external forces such as decisions by management to include new features in the release or to release earlier to beat a competitor. Alternatively, the rush may simply be due to inappropriate or unrealistic scheduling. Whatever the reason is it is an obvious. Regardless of the causes, the rush to release stresses developers and often requires developers to work on unusual, high priority or critical areas of the system. In this paper we study how RTR effects project organization and introduces technical debt. We want to propose a method to observe, analyze and summarize the results of revisions found near release. We intend to infer behavior of the developers related to the process around release time. The key research questions that we expect to answer with our methodology are described in section 1.1.
 
 During the merge window, developers are free to provide any change that is ready for release. During the release candinate period, we would expect to see fixs on the files that were changed during the previous merge window. We measure this by comparing the Jac of merge window with the subsequent rc period, compared with the merge window and subsequent merge window.
 
-We observe a the developers working areas to understand the allocation of the resources within an open source software development project to identify that an improper reallocation or inappropriate reorganization causes a disruptive event take place in a software development process. We attempt to identify a project's different release times and calculate the difference between different development periods within a releases to identify which new areas are being worked on and what is the behavior of the developers between normal development period and the period when RTR is prompted before a releases. The historical data from git that we are working on for this purpose will help us to extract a lot of information like calculating the developers' working areas and time-frame of each release as well as different periods in a stable release period. This information will help us to identify the criteria of the resources, their roles and behaviors, code ownership and defect density of the domains they are working in.
+We observe the developers' working areas to understand the allocation of the resources within an open source software development project to identify that an improper reallocation or inappropriate reorganization causes a disruptive event take place in a software development process. We attempt to identify a project's different release times and calculate the difference between different development periods within a releases to identify which new areas are being worked on and what is the behavior of the developers between normal development period and the period when RTR is prompted before a releases. The historical data from git that we are working on for this purpose will help us to extract a lot of information like calculating the developers' working areas and time-frame of each release as well as different periods in a stable release period. This information will help us to identify the criteria of the resources, their roles and behaviors, code ownership and defect density of the domains they are working in.
 
 We have organized this paper as follows. In Section 2, we describe some background and motivations followed by some summaries of related works in Section 3. Section 4 will describe methodology of our work and the data we are using for this research. In section 5 we will dicuss the results of the findings. Section 6 is going to cover the threats to validity. Finally section 7 will conclude the paper.
+
+\subsection{Research Questions}
+We have set our research questions focusing the key properties of software development process, allocation of developers throughout the process, especially for open source software development. First couple of research questions are to understand the basic structure and strategies of the development and release and merging process practiced by Linux. Rest of the questions are to understand the distribution of developers working areas and the behavior of developers in different segments of a release period.
+
+\renewcommand{\labelenumi}{Q\theenumi:}
+\begin{enumerate}
+\item What is the release process used by the project? \newline
+We are going to give a qualitative description of Linux Kernel development in brief to give anser to this question.
+\item How many developers are allocated troughout different segments of a release period? \newline
+Answer to this question will give us a big picture of Linux Kernel development community as well as the contrubution of developers in different periods within a stable release period.
+\item Do developers work on different areas of the system around the time of release? \newline
+We want to see if developers are looking at different types of files in the code-base around the time of release which is being considered as the merge period or merge window\cite{linux_kernel}. We are expecting this would be the RTR are in a release time where technical debt may be introduced.
+\item How do developers own code around t he system?
+Many developers are working on many files. We will find out which files has been churned mostly by which developer so that we can understand how developers are distributed among the system.
+\item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)? \newline
+To answer this question we will look into the frequency of file churns made into files. Difference or distance of the files between normal development period and the RTR period or merge period of a release.
+\end{enumerate}
 
 \section{Background}
 There may have lower developers productivity \cite{cataldo_identification, damian_awareness} which may cause inefficient run in the rush moments in a release period. There is a substantial and important body of literature on risk in software engineering. Boehm identified the most important risks encountered by software project managers and described successful risk management practices \cite{boehm_software_risk, keil_framework, boehm_agile}. Some of the risks identified are related to disruptive events, such as the introduction of a new technology, but most are macro risks associated with running a project, such as developing the wrong functionality. General risk mitigation strategies can be difficult to apply to specific disruptive events. There may be various kinds of disruptive events for example, as a release approaches; developers take shortcuts that introduces technical debt. If it is not repaired, the long term quality of the system will suffer. Another example can be placed, if a lead developer who owns an important part of the code-base leaves and if steps to train other developers were not taken, it will become a dead area of the system and will be difficult to modify and maintain. Also often management reorganizes the developers on a company's projects during the rush period around the release time, with the result that developers move to code-bases for which they have less experience. The reorganization introduces new perspectives and expertise that can lead to faster release; however, it can also result in a drop in productivity and the unnecessary re-writing of large portions of the system that the new developers do not understand.
@@ -60,16 +72,56 @@ Our methodology can be summarized as: Extracting Data for revisions and releases
 
 \subsection{Data Extraction}
 We went for the VCS of a target project and either mirror the repository or download every revision and commit log history data. From DVCSs such as Git we extract the revisions and release information. We wrote Perl scripts to extract date that was further processed to obtain details. Manual inspection was used to resolve problems and things like that in cases where all automated techniques failed.
-We then put them into a database. We have used PSQL database to create tables in, to store our extracted data. These extracted data will be analyzed by us later on. Per each revision the information extracted includes the commit id, tree id, author of the revision, date of revision, the name of the revised file, parent and child info for the revision and the detail log information. Once extraction is completed we are ready to partition the version numbers (Section 4.2) and duration  of each release (Section 4.3).
+We then put them into a database. We have used PSQL database to create tables in, to store our extracted data. These extracted data will be analyzed by us later on. Per each revision the information extracted includes the commit id, tree id, author of the revision, date of revision, the name of the revised file, parent and child info for the revision and the detail log information. Once extraction is completed we are ready to partition the version numbers (Section 4.3) and duration  of each release (Section 4.4).
 
 \subsubsection{Explanation}
-A Linux kernel development release version having maximum length of information does look like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release versioning looks like ``linuxv2.6.13'' it tells us that this particular release is the 13th minor release  in the seriese of the 6th major release of kernel version 2. ``linuxv2.6.13\textbf{-rc1}'' says that after the 12th stable minor release had published, development for the next release has been started and rc1 is the first candidate on the way to the next release. It also ensures that next release is going to be another minor release which is ``linuxv2.6.13''. We have last couple of release candidates and the release date for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' which is not useful for our calculation. So we are having 340 releases including major, minor, micro and rc; 40 stable releases from ``linuxv2.6.12'' to ``linuxv3.11''. We have total 400441 distinct commits and for 372943 of them have change information for 77082 different files in our hand where we have 14599 developers' working history among 14621 distinct developers.
-Surprisingly 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our released wise datasets.
+A Linux kernel development release version having maximum length of information does look like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release versioning looks like ``linuxv2.6.13'' it tells us that this particular release is the 13th minor release  in the seriese of the 6th major release of kernel version 2. ``linuxv2.6.13\textbf{-rc1}'' says that after the 12th stable minor release had published, development for the next release has been started and rc1 is the first candidate on the way to the next release. It also ensures that next release is going to be another minor release which is ``linuxv2.6.13''. We have last couple of release candidates and the release date for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' which is not useful for our calculation. So we are having 340 releases including major, minor, micro and rc; 40 stable releases from ``linuxv2.6.12'' to ``linuxv3.11''. We have total 400441 distinct commits and for 372943 of them have change information for 77082 different files in our hand where we have 14599 developers' working history among 14621 distinct developers. Surprisingly 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our released wise datasets.
 
-\subsection{Partitioning Release Numbers}
+\subsection{Finding Release Commits}
+As out first step we had to sort out all the commits together those are belonging to any of the releases that we have. We have all 400441 commits in our hand but though we can't plot them into a single time domain to say that these commits are for release 2.6.12 and these are for 2.6.13 and these are for 2.6.14 and so on because commits go on parallelly in git if there are multiple branches. If there are multiple branches, surely there are multiple merges and the commits prior to a crisscross merge are all ancestors of the heads of all subsequent branches \cite{bird_git}. Figure 1 shows how a git DAG looks like having so many crisscross merges in a busy branching snap-shot of the git DAG of Linux Kernel development.
+\begin{figure}
+\begin{center}
+\includegraphics[height=3.5in,width=2.5in]{gitdag.png}
+\caption{\small \sl Branching in git DAG for linux kernel development.}
+\end{center}
+\end{figure}
+So it is possible to make a commit months ago from today while several releases may have already been made in the mean time but that commit can belong to any future release. Commits that are being made to a branch may get merged with other branch or the head branch during the release period. This is why we had to track all the way down the trees for each of the 340 releases in the git DAG to find out which commit contributes to which release. We could do this using Git DAG Traversing (GDT) algorithm as shown in Algorithm 1. After applying GDT we collected 381152 out of 400441 commits those are well organized in the git DAG for Linux Kernel development. As we mentioned earlier that we have last couple of release candidates and the release date for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' and we are choping out them because we don't have complete data for version 2.6.12-rc as well as 3.12-rc releases, 19289 commits belonging to those releases. So finally we have 381152 commits for 340 releases in our hand to progress our work on.
+
+\begin{algorithm}
+\caption{Traverse Git DAG to find Commits within Releases}
+\begin{algorithmic}[1]
+\REQUIRE
+\STATE commit id for all releases
+\ENSURE
+\FOR{all commits}
+\STATE start from new commit, release R
+\STATE store commit in ``git\_commit\_release''
+\IF{has parent commit}
+	\FOR{each parent commit}
+		\IF{if parent commit has a release tag}
+			\STATE repeat step 1
+		\ELSIF{parent commit already stored}
+			\STATE compare release versions
+			\IF{release version not smaller than R}
+				\STATE update existing\_release $\gets$ R
+			\ENDIF
+		\ELSE
+			\STATE store parent commit in ``git\_commit\_release''
+			\STATE commit id $\gets$ parent commit id
+			\STATE repeat step 3
+		\ENDIF
+	\ENDFOR
+\ELSIF{no parent commit}
+	\STATE repeat step 1
+\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+ \subsection{Partitioning Release Numbers}
 We stored the extracted git commit log data into the tables git\_commit and git\_revision where all the basic and log information for a particular commit was mentioned in the first table and second one containing which commit belongs to which version of Linux kernel development and change details like path modified, new path created due to the change, how many addition and how many deletion occurred in a particular commit etc. By joining these tables we can easily get the dates of each version and from the version number which is a combination of different types of releases we can get determine which commit belongs to which version and release, and also what type of release that is.
 
-We are getting the release dates with every single commit record. So we can understand which commit belongs to which version of release, is this a major release or minor or micro. Another information we have captured that is \textbf{rc} which means that the particular commit was a release candidate.
+We are getting the release dates with every single commit record. So we can understand which commit belongs to which version of release; is this a major release or minor or micro. Another information we have captured that is \textbf{rc} which means that the particular commit was a release candidate.
 
 \subsection{Time-Span of Releases}
 Another information that we require is what are the durations of the releases of Linux kernel development. To achieve that we joined the table in figure 1 and the table ``git\_commit'' which gives us all the dates of commit for each and every release, so we can easily find out the duration between two consecutive releases (all including release candidates RC). This information is more important to us because we need to see what is the general development period and what is the merge which we can treat as RTR period within a release period of time. We also need to understand how developers are working, what is the impact of their changes made in the code-base during a particular release period later on. Table 1 shows a small portion of this information. Preior to calculate the developers' areas in secion 4.4 we require this information.
@@ -111,31 +163,7 @@ Note that the very first row has no information for the ``Start Date'' because w
 Developers are working throughout the release time. Here ``Developers' Area'' (DA) means the files developers work in within a release time. It doesn't refer to the file itself but it is important to understand which files are being touched by which developers. We see that authors are committing files almost everyday throughout a release. We have the commit log data in our hand and we know what is the duration for each and every releases (i.e.\ start and end dates). Now it is possible to find out which commits were made for which files by which developer within a certain time range of a release.
 
 \subsubsection{DA in a Release Period}
-We select all the release information from the table where we stored the releases with their corresponding time-span. After that we select author name and other relevant information from the joining of ``git\_revision'' and ``git\_commits'' tables for every release. We insert these information into another table so that we can use the data for our further analysis.
-
-The following pseudo code shows us the way of achieving the desired result in this section:
-
-\begin{algorithm}
-\caption{Calculate Developers Area}
-\begin{algorithmic}
-\REQUIRE $ $\\
-$commit\_date \geq  release\_start\_date$\\
-$commit\_date < release\_end\_date$
-\ENSURE
-\STATE $get all releases$
-
-\WHILE{$prev\_release\_date \leftarrow release\_start\_date\ and\ release \leftarrow release\_version$}
-\IF{$release$}
-	\IF{$commit\_date \geq  release\_start\_date$ and $commit\_date < release\_end\_date$}
-		\STATE $select author, path, commits, churn$
-		\STATE $insert data into table dev\_area\_rel$
-	\ENDIF
-\ENDIF
-\ENDWHILE
-\end{algorithmic}
-\end{algorithm}
-
-A relatively straightforward discipline of Linux Kernel Development team is followed with regard to the merging of patches for each release \cite{linux_kernel}.  At the beginning of each development cycle, the "merge window" is said to be opened.  At that time, code which is deemed to be sufficiently stable (and which is accepted by the development community) is merged into the mainline kernel. The bulk of changes for a new development cycle (and all of the major changes) will be merged during this time, at a rate approaching 1,000 changes ("patches," or "changesets") per day. Strategically linux starts a new kernel release with the merging and fixing to get their development branch ready to start development for the next release. So there are two main segments in a release period, one is merge window or merge period (MP) and another is development window what we are going to call Release Development Period (RDP).
+We select all the release information from the table where we stored the releases with their corresponding time-span. After that we select author name and other relevant information from the joining of ``git\_revision'' and ``git\_commits'' tables for every release. We insert these information into another table so that we can use the data for our further analysis. A relatively straightforward discipline of Linux Kernel Development team is followed with regard to the merging of patches for each release \cite{linux_kernel}.  At the beginning of each development cycle, the "merge window" is said to be opened.  At that time, code which is deemed to be sufficiently stable (and which is accepted by the development community) is merged into the mainline kernel. The bulk of changes for a new development cycle (and all of the major changes) will be merged during this time, at a rate approaching 1,000 changes ("patches," or "changesets") per day. Strategically linux starts a new kernel release with the merging and fixing to get their development branch ready to start development for the next release. So there are two main segments in a release period, one is merge window or merge period (MP) and another is development window what we are going to call Release Development Period (RDP).
 
 Similarly we have calculated DA in both MP and RDP as described in the following subsections.
 

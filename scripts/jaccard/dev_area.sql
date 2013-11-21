@@ -57,4 +57,5 @@ create table jac_dist (
 	jd_dev_rtr numeric,
 	jd_merge_rtr numeric
 );
+insert into jac_dist select release from stable_releases;
 

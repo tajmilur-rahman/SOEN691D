@@ -41,7 +41,13 @@ create table rtr_period (
         rel_date timestamp with time zone,
 	days integer not null default 0
 );
-
+drop table if exists stable_releases;
+create table stable_releases(
+	release text,
+	start_date timestamp with time zone,
+	end_date timestamp with time zone,
+	days float not null default 0
+);
 --select
 --	major, minor, micro,
 --	min(committer_dt),

@@ -47,9 +47,9 @@ We have set our research questions focusing the key properties of software devel
 \renewcommand{\labelenumi}{Q\theenumi:}
 \begin{enumerate}
 \item What is the release process used by the project? \newline
-We are going to give a qualitative description of Linux Kernel development in brief to give anser to this question.
-\item How many developers are allocated troughout different segments of a release period? \newline
-Answer to this question will give us a big picture of Linux Kernel development community as well as the contrubution of developers in different periods within a stable release period.
+We will be giving a qualitative description of Linux Kernel development in brief to give anser to this question.
+\item How many developers are allocated troughout different segments of a release period? What significant difference can be observed between the segments of an entire release period? \newline
+Answer to this question will give us a big picture of Linux Kernel development community as well as the contrubution of developers in different periods within a stable release period. We will calculate Jaccard Distance to differentiate the behavior of developers during RTR and normal development period.
 \item Do developers work on different areas of the system around the time of release? \newline
 We want to see if developers are looking at different types of files in the code-base around the time of release which is being considered as the merge period or merge window\cite{linux_kernel}. We are expecting this would be the RTR are in a release time where technical debt may be introduced.
 \item How do developers own code around t he system?
@@ -75,20 +75,25 @@ We went for the VCS of a target project and either mirror the repository or down
 We then put them into a database. We have used PSQL database to create tables in, to store our extracted data. These extracted data will be analyzed by us later on. Per each revision the information extracted includes the commit id, tree id, author of the revision, date of revision, the name of the revised file, parent and child info for the revision and the detail log information. Once extraction is completed we are ready to partition the version numbers (Section 4.3) and duration  of each release (Section 4.4).
 
 \subsubsection{Explanation}
-A Linux kernel development release version having maximum length of information does look like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release versioning looks like ``linuxv2.6.13'' it tells us that this particular release is the 13th minor release  in the seriese of the 6th major release of kernel version 2. ``linuxv2.6.13\textbf{-rc1}'' says that after the 12th stable minor release had published, development for the next release has been started and rc1 is the first candidate on the way to the next release. It also ensures that next release is going to be another minor release which is ``linuxv2.6.13''. We have last couple of release candidates and the release date for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' which is not useful for our calculation. So we are having 340 releases including major, minor, micro and rc; 40 stable releases from ``linuxv2.6.12'' to ``linuxv3.11''. We have total 400441 distinct commits and for 372943 of them have change information for 77082 different files in our hand where we have 14599 developers' working history among 14621 distinct developers. Surprisingly 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our released wise datasets.
+A Linux kernel development release version having maximum length of information does look like \textbf{linuxvA.B.C-rcP} where A, B, C, P are numeric. If a release versioning looks like ``linuxv2.6.13'' it tells us that this particular release is the 13th minor release  in the seriese of the 6th major release of kernel version 2. ``linuxv2.6.13\textbf{-rc1}'' says that after the 12th stable minor release had published, development for the next release has been started and rc1 is the first candidate on the way to the next release. It also ensures that next release is going to be another minor release which is ``linuxv2.6.13''. We have last couple of release candidates for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' which is not useful for our calculation. So we are having 340 releases including major, minor, micro and rc; 39 stable releases from ``linuxv2.6.11'' to ``linuxv3.11'' having complete data with us. We have total 400441 distinct commits and for 372943 of them have change information for 77082 different files in our hand where we have 14599 developers' working history among 14621 distinct developers. Surprisingly 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our released wise datasets.
 
-\subsection{Finding Release Commits}
-As out first step we had to sort out all the commits together those are belonging to any of the releases that we have. We have all 400441 commits in our hand but though we can't plot them into a single time domain to say that these commits are for release 2.6.12 and these are for 2.6.13 and these are for 2.6.14 and so on because commits go on parallelly in git if there are multiple branches. If there are multiple branches, surely there are multiple merges and the commits prior to a crisscross merge are all ancestors of the heads of all subsequent branches \cite{bird_git}. Figure 1 shows how a git DAG looks like having so many crisscross merges in a busy branching snap-shot of the git DAG of Linux Kernel development.
+ \subsection{Partitioning Release Numbers}
+We stored the extracted git commit log data into the tables git\_commit and git\_revision where all the basic and detail log information for a particular commit was mentioned in the first table and second one containing which commit belongs to which version of Linux kernel development and change details like path modified, new path created due to the change, how many addition and how many deletion occurred in a particular commit etc. By joining these tables we can easily get the dates of each version and from the version number which is a combination of different types of releases we can determine which commit belongs to which version and release, and also what type of release that is.
+
+Commits those are made for pushing a release have release tags associated to them by which we can understand which commit belongs to which version of release; is this a major release or minor or a micro stable release. Another information we have captured that is \textbf{rc} which indicates that the particular commit was a release candidate. These information and splitting off release numbers will help us accumulating commits for different releases.
+
+\subsection{Finding Commits for Releases}
+We have to sort out and accumulate all the commits together those are belonging to any of the releases that we have. We have all 400441 commits in our hand but though we can't plot them into a single time domain to assign different set of commits to different release periods because development goes in parallel on different branches in git so commits also go in parallel. If there are multiple branches, surely there are multiple merges and the commits prior to a crisscross merge are all ancestors of the heads of all subsequent branches \cite{bird_git}. Figure 1 shows how a git DAG looks like having so many crisscross merges in a busy branching snap-shot of the git DAG of Linux Kernel development.
 \begin{figure}
 \begin{center}
 \includegraphics[height=3.5in,width=2.5in]{gitdag.png}
 \caption{\small \sl Branching in git DAG for linux kernel development.}
 \end{center}
 \end{figure}
-So it is possible to make a commit months ago from today while several releases may have already been made in the mean time but that commit can belong to any future release. Commits that are being made to a branch may get merged with other branch or the head branch during the release period. This is why we had to track all the way down the trees for each of the 340 releases in the git DAG to find out which commit contributes to which release. We could do this using Git DAG Traversing (GDT) algorithm as shown in Algorithm 1. After applying GDT we collected 381152 out of 400441 commits those are well organized in the git DAG for Linux Kernel development. As we mentioned earlier that we have last couple of release candidates and the release date for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12'' and we are choping out them because we don't have complete data for version 2.6.12-rc as well as 3.12-rc releases, 19289 commits belonging to those releases. So finally we have 381152 commits for 340 releases in our hand to progress our work on.
+So it is possible to make a commit months ago from today while several releases may have already been made in the mean time but that commit can belong to any future release. Commits that are being made to a branch may get merged with other branch or the head branch during the release period. This is why we had to track all the way down the trees for each of the 340 releases in the git DAG to find out which commit contributes to which release. We could do this using Git DAG Traversing (GDT) algorithm as shown in Algorithm 1. After applying GDT we collected 381152 out of 400441 commits those are well organized in the git DAG for Linux Kernel development. As we mentioned earlier that we have last couple of release candidates for ``linuxv2.6.12'' and first couple of release candidates for ``linuxv3.12''. We are choping out them because we don't have complete release commit data for version 2.6.12-rc as well as 3.12-rc releases. Out of 400441 commits 19289 are belonging to those releases. So finally we have 381152 commits for 340 releases in our database to progress our work on.
 
 \begin{algorithm}
-\caption{Traverse Git DAG to find Commits within Releases}
+\caption{GDT: to find Commits within Releases}
 \begin{algorithmic}[1]
 \REQUIRE
 \STATE commit id for all releases
@@ -118,13 +123,8 @@ So it is possible to make a commit months ago from today while several releases 
 \end{algorithmic}
 \end{algorithm}
 
- \subsection{Partitioning Release Numbers}
-We stored the extracted git commit log data into the tables git\_commit and git\_revision where all the basic and log information for a particular commit was mentioned in the first table and second one containing which commit belongs to which version of Linux kernel development and change details like path modified, new path created due to the change, how many addition and how many deletion occurred in a particular commit etc. By joining these tables we can easily get the dates of each version and from the version number which is a combination of different types of releases we can get determine which commit belongs to which version and release, and also what type of release that is.
-
-We are getting the release dates with every single commit record. So we can understand which commit belongs to which version of release; is this a major release or minor or micro. Another information we have captured that is \textbf{rc} which means that the particular commit was a release candidate.
-
 \subsection{Time-Span of Releases}
-Another information that we require is what are the durations of the releases of Linux kernel development. To achieve that we joined the table in figure 1 and the table ``git\_commit'' which gives us all the dates of commit for each and every release, so we can easily find out the duration between two consecutive releases (all including release candidates RC). This information is more important to us because we need to see what is the general development period and what is the merge which we can treat as RTR period within a release period of time. We also need to understand how developers are working, what is the impact of their changes made in the code-base during a particular release period later on. Table 1 shows a small portion of this information. Preior to calculate the developers' areas in secion 4.4 we require this information.
+Another information that we require is what are the durations of the releases of Linux kernel development. To achieve that we joined the table ``git\_refs\_tags'' where all the releases are stored including the splitted release numbers and the table ``git\_commit'' to give us all the dates of commits for each and every releases, so that we can easily find out the duration between two consecutive releases (including release candidates RC). This information will significantly help us because we need to see what is the general development period and what are the merge periods which can be treated as RTR period within a release period. We also need to understand how developers are working, what is the impact of their changes made in the code-base during a particular release period later on. Table 1 shows a small portion of this information. Preior to calculate the developers' areas in secion 4.4 we require this information.
 
 \begin{table}[ht]
 \caption{Different Releases}  % title of Table
@@ -148,27 +148,21 @@ linuxv2.6.13-rc3 & rc       & 2005-07-05 & 2005-07-13 \\
 ...			     & ...	   & ... 		     & ... \\
 ...			     & ...	   & ... 		     & ... \\
 linuxv3.11            & minor & 2013-08-25 & 2013-09-02 \\
-linuxv3.12-rc1     & rc       & 2013-09-02 & 2013-09-16 \\
-linuxv3.12-rc2     & rc       & 2013-09-16 & 2013-09-23 \\
-linuxv3.12-rc3     & rc       & 2013-09-23 & 2013-09-29 \\
 [1ex]							% adds vertical space
 \hline 							% inserts single line
 \end{tabular}
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-Note that the very first row has no information for the ``Start Date'' because we don't have any data prior to stable release ``linuxv2.6.12''. From the extraction we found complete records for releases ``linuxv2.6.13'' to ``linuxv2.6.39'' then it is ``linuxv3.0'' to ``linuxv3.11''. Our farther works will be proceeded based on these 40 releases only. As we don't have the complete release information for 3.12 or later and also for 2.6.12 or earlier ones, we are going to not consider them in our farther calculation.
+Note that the very first row has no information for the ``Start Date'' because we don't have the  complete information prior to stable release ``linuxv2.6.12'' and we have chopped them out. This will not affect our methodology and measurements. From the extraction we found complete records for releases ``linuxv2.6.13'' to ``linuxv2.6.39'' then it is ``linuxv3.0'' to ``linuxv3.11''. Our farther works will be proceeded based on these 39 releases only. As we don't have the complete release information for 3.12 or later as well as for 2.6.12 and earlier ones.
 
 \subsection{Calculate Developers' Area}
 Developers are working throughout the release time. Here ``Developers' Area'' (DA) means the files developers work in within a release time. It doesn't refer to the file itself but it is important to understand which files are being touched by which developers. We see that authors are committing files almost everyday throughout a release. We have the commit log data in our hand and we know what is the duration for each and every releases (i.e.\ start and end dates). Now it is possible to find out which commits were made for which files by which developer within a certain time range of a release.
 
-\subsubsection{DA in a Release Period}
-We select all the release information from the table where we stored the releases with their corresponding time-span. After that we select author name and other relevant information from the joining of ``git\_revision'' and ``git\_commits'' tables for every release. We insert these information into another table so that we can use the data for our further analysis. A relatively straightforward discipline of Linux Kernel Development team is followed with regard to the merging of patches for each release \cite{linux_kernel}.  At the beginning of each development cycle, the "merge window" is said to be opened.  At that time, code which is deemed to be sufficiently stable (and which is accepted by the development community) is merged into the mainline kernel. The bulk of changes for a new development cycle (and all of the major changes) will be merged during this time, at a rate approaching 1,000 changes ("patches," or "changesets") per day. Strategically linux starts a new kernel release with the merging and fixing to get their development branch ready to start development for the next release. So there are two main segments in a release period, one is merge window or merge period (MP) and another is development window what we are going to call Release Development Period (RDP).
-
-Similarly we have calculated DA in both MP and RDP as described in the following subsections.
+A relatively straightforward discipline of Linux Kernel Development team is followed with regard to the merging of patches for each release \cite{linux_kernel}.  At the beginning of each development cycle, the "merge window" is said to be opened.  At that time, code which is deemed to be sufficiently stable (and which is accepted by the development community) is merged into the mainline kernel. The bulk of changes for a new development cycle (and all of the major changes) will be merged during this time, at a rate approaching 1,000 changes ("patches," or "changesets") per day. Strategically linux starts a new kernel release with the merging and fixing to get their development branch ready to start development for the next release. So there are two main segments in a release period, one is merge window or merge period (MP) and another is development window what we are going to call Release Development Period (RDP)
 
 \subsubsection{DA in a Merge Period}
-Merge Perid can be determined from the previous release (any of major, minor or micro releases) date to the first RC date. For example if the date of release for ``linuxv2.6.12''  is 2005-06-17 and date of pushing the first RC for the next release ``linuxv2.6.13-rc1'' is 2005-06-29 then this time period of of 12 days is being called the merge window \cite{14_kernel} or MP. Table 2 shows some merging periods of different releases.
+Merge Perid can be determined from the previous release (any of major, minor or micro releases) date to the first RC date. For example if the date of release for ``linuxv2.6.12''  is 2005-06-17 and date of pushing the first RC for the next release ``linuxv2.6.13-rc1'' is 2005-06-29 then this time period of of 12 days is being called the merge window \cite{14_kernel} or MP. We are considering this segment as a Rush To Release i.e.\ RTR as we mentioned earlier because thousands of commits are made during this time and developers remain in a rush to pack up merging all the branches those are to go with this release. Table 2 shows merging periods of some releases.
 
 \begin{table}[ht]
 \caption{Release Merging Periods}  % title of Table
@@ -198,7 +192,7 @@ linuxv2.6.25		& 2008-01-24	& 2008-02-10 \\
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-We understand DA or Developers' Area is the files in the code-base, developers are working from the dataset that we have in our hand. We have the commit logs and every record says about who committed the file when did he/she worked on the file. If we run an SQL query then we can easily find out for every author and for every particular file how many times it's been committed by an author and what changes (here, addition + deletion = churn) he/she has been made. So we are calculating the DA and storing the information into a table. A part of that table is shown in table 3.
+We have the commits contributed to releases and every record explains us who committed the file when did this get churned. If we run an SQL query then we can easily find out for every author and for every particular file how many times it's been committed by an author and what churns (addition + deletion = churn) developer has made. We are calculate DA and store the information into a table. A part of that table is shown in table 3.
 
 \begin{table}[ht]
 \caption{DA in Merge Period}  % title of Table
@@ -221,8 +215,8 @@ J. Juhl		& arch/.../generic.c		& 1				& 3 \\
 
 In this table we see in a merging period inside a release period D. S. Miller has made change in pci.h file only once wich the churn number 8. In the similar way we calculate DA in RDP and RTR period as well.
 
-\subsubsection{DA in a RD Period and RTR}
-As like MP we can extract the RDP from the. RDP here in Linux Kernel development process is being considered as from the release date of RC1 (i.e.\ first release candidate opening the gate for the development of the next release) to the next release (major, minor or micro) date. For example if the date of release for ``linuxv2.6.13-rc1'' after releasing ``linuxv2.6.12''  is 2005-06-29 and date of publishing the next release ``linuxv2.6.13'' is 2005-08-28 then this time period of of 60 days is being called the RDP. Table 4 is showing some development periods of different releases.
+\subsubsection{DA in RD Period}
+As like MP we can extract the RDP from the releases. RDP here in Linux Kernel development process is being considered as from the date of RC1 release (i.e.\ first release candidate opening the gate for the development of the next release) to the next release (major, minor or micro) date. For example if the date of release for ``linuxv2.6.13-rc1'' after releasing ``linuxv2.6.12'' is 2005-06-29 and date of publishing the next release ``linuxv2.6.13'' is 2005-08-28 then we are calling this 60 days of development period for the release as the RDP. Table 4 is showing some development periods of different releases.
 
 \begin{table}[ht]
 \caption{Release Development Periods}  % title of Table
@@ -252,37 +246,9 @@ linuxv2.6.25		& 2008-02-10	& 2008-04-16 \\
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-So along these RDs of each release period developers get involved in the development for the next release. As we mentioned earlier RTR may happen as the release approaches. Keeping this in our aim list we noticed an important slot in these RDs of releases. We see in between two consecutive releases there is a merging period of time, after that development starts by pushing RCs and once RC releases stops and it takes some days of time for the preperation to publish the release. We are calling this last part as RTR Period because we asume RTR may happen in this period of time before release. Table 5 represents some releases with their corresponding RTR (i.e.\ from end date to rc and date of release).
+Along these RDs of each release period developers get involved in the development for the next release. We see in between two consecutive releases there is a merging period of time, after that development starts by pushing RCs and once RC releases stops and it takes some days of time for the preperation to publish the release. This is the end of the code development for this particular release. Usually bug fixes and small enhancement works take place here. We observed there are very few commits in this small period.
 
-\begin{table}[ht]
-\caption{RTR Periods}  % title of Table
-\centering 						% used for centering table
-\begin{tabular}{c c c c}				% centered columns (4 columns)
-\hline\hline						%inserts double horizontal lines
-% table heading
-Release 			& RC End Date	& Release Date	& Days \\ [0.5ex]
-\hline 							% single horizontal line
-% inserting body of the table
-linuxv2.6.13		& 2005-06-29	& 2005-08-28	& 5 \\
-linuxv2.6.14		& 2005-09-12	& 2005-10-27	& 8 \\
-linuxv2.6.15		& 2005-11-11	& 2006-01-02	& 9 \\
-linuxv2.6.16		& 2006-01-17	& 2006-03-20	& 8 \\
-linuxv2.6.17		& 2006-04-02	& 2006-06-17	& 12 \\
-linuxv2.6.18		& 2006-07-06	& 2006-09-19	& 7 \\
-linuxv2.6.19		& 2006-10-04	& 2006-11-29	& 14 \\
-linuxv2.6.20  		& 2006-12-13	& 2007-02-04	& 10 \\
-linuxv2.6.21		& 2007-02-20	& 2007-04-25	& 7 \\
-linuxv2.6.22		& 2007-05-12	& 2007-07-08	& 8 \\
-linuxv2.6.23		& 2007-07-22	& 2007-10-09	& 9 \\
-linuxv2.6.24		& 2007-10-23	& 2008-01-24	& 5 \\
-linuxv2.6.25		& 2008-02-10	& 2008-04-16	& 8 \\
-[1ex]							% adds vertical space
-\hline 							% inserts single line
-\end{tabular}
-\label{table:nonlin} 				% is used to refer this table in the text
-\end{table}
-
-These information above will help us to answer our first research-question.
+These information above will greatly help us to answer our first couple of research questions.
 
 \subsection{Finding Code Ownership}
 So many developers are working from different development communities. We tried to investigate the "code ownership" \cite{mockus_case_study} evolved in Linux Kernel development. Here code ownership is going to be represented as percentage value. Considering the data that we have for complete releases (``linuxv2.6.12'' to ``linuxv3.11'') we filtered the code files and we found 75138 distinct files that have been worked on. We investigate the total number of commits, total number of churn for each and every file also how many developers contributed for these commits and changes. This information yet does not tell about the ownership. We need to find out ownership for every developers in different development areas in an RP. We already have the collection of developers working in different areas MP, RDP, RTR within an RP and stored them with corresponding file they have worked on, how many commits a developer made to a particular file and how many changes he/she has made. We now update those information with the ownership information. For calculating ownership Equation 1 is applied.
@@ -316,12 +282,40 @@ Randy Dunlap			& 2.6.24		& ...\_core.c 		& 100.00\\
 \end{table}
 The example given above is calculated for the developers worked for different files in different releases. Ownership is calculated for all the developers in release periods. In the same way we have calculated what is the ownership value for a developer to a particular file in the merge period (MP) in a release, development period (RDP) in a release and RTR period ind a release.
 
-\section{Preliminary Results}
-In this section we present results from several quantitative analysis of the archival data from the Linux Kernel development project. The measures we derive from these data are well-suited to answer our research questions. Once we found different releases and the release periods as well as we calculate the work areas and code ownerships for developers we also want to know what is the difference being created by making changes between two consecutive releases. We want to see what is the difference among the releases also among the different sections MP, RDP, RTR in a release period. To observe this we want to calculate the difference using Jaccard Similarity Coefficient \cite{jaccard_alpine} which is represented by the following equation.
+\section{Results}
+In this section we present results from several quantitative analysis of the archival data from the Linux Kernel development project. The measures we derive from these data are well-suited to answer our research questions.
+
+\textit{What is the release process used by the project?}
+
+In the early 1990's the Linux kernel development was not so busy affair \cite{linux_kernel}. There were very small number of users and developers involved at that time. Developers use a loosely time-based release process. Linux publishes it's major kernel release in every two or three months. If we look at figure 2 the Release Duration Line represents how the stable releases are going on since 2005. From the figure we can see the average duration of each stable release is 62.47 although ``linuxv2.6.24'' was significantly hight as exception, it took 92.8 days.
+
+Linux Kernel development uses Rolling Release Development Model. Usually every micro release (ex.\ linuxv2.6.x) is a major kernel release with new features, internal API changes, and more. A minor release (ex.\ linuxv3.11) can have around  10 thousand changesets with several hundred thousands of churned lines of  codes (LOC). At the beginning of each stable release the merge window i.e.\ merge period gets opened and all the accepted and stable codes from the community are merged having around 1000 of churns everyday. Merge period approximately for 14 days as shown in the figure 2. The bottom line is representing the merge windows of every releases. We don't have the merge period data for the very first one that's why it's starting from 0.
+
+After getting all the major works merged development period for the next release is announced to be opened. If the next release is going to be linuxv2.6.14 then the release pushed at the end of the merge window will be called linuxv2.6.14-rc1. \textbf{-rc1} release indecates that the time to stabilize the next kernel has begun. These candidate releases continu to be pushed for once a week. If there is any bug fix or any high-priority change only then that goes to the main line during this period. With the continuous rc releases when the new kernel seems to be stable then the it goes for the stable release. Again after the core features are pushed to the main line then merge window gets opened and accepts all other feature developments, patchsets from other branches.
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{linxrelmergfreq.png}
+\caption{\small \sl Durations of Linux Kernel development release}
+\end{center}
+\end{figure}
+
+As a summary, the description above helps to address some of the questions about how Linux Kernel development is organized. Answer to this first research question provides essential background for understanding our quantitative results. We will look into more detail of the development process, distribution of developers among the release segments as well as will try to find answers for our other research questions in the next sections.
+
+\subsection{Difference between release segments}
+\textit{How many developers are allocated troughout different segments of a release period? What significant differ-ence can be observed between the segments of an entire release period?}
+
+In order to see how many developers contribute to the new featcher developments and how many contribute in merging and fixing, review and accepting codes from the community during the merge period, we observed the developers' are in MP and developers' area in RDP. Out of all 381152 commits belonging to any of the 340 releases 292834 commits were made during the time of merge period which is 76.82\% (more than 2/3) of the total commits.
+
+We found that there was not a great number of people contributing during the time of merge periods. The number was pretty stedy for every releases while during the development periods we see increasing number of contributions of developers . Figure 3 illustrates this behaviour clearly.
+
+(TODO: Add figure for developers and churns in MP and RDP)
+
+Once we found different releases and the release periods as well as we calculate the developers' areas and code ownerships for developers we also would like to know what is the difference being created by making changes between the two main segments within an entire release development cycle (i.e.\ MP and RDP). To observe this we want to calculate the difference using Jaccard Similarity Coefficient \cite{jaccard_alpine} which is represented by equation 3.
 \begin{equation} J(A, B) =\frac{|A \cap B|}{|A \cup B|} \end{equation}
-So the Jaccard Distance can be obtained by subtracting the Jaccard coefficient from 1.
+The Jaccard Distance can be obtained by subtracting the Jaccard Coefficient from 1.
 \begin{equation} d_j(A, B) = 1 - J(A, B) = \frac{|A \cup B|-|A \cap B|}{|A \cup B|} \end{equation}
-Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for in a particular release as the set A and files worked for in another release is set B. We found that Jaccard distance between two consecutive releases are not too high. For example jaccard bwteen release ``linuxv2.6.13'' and ``linuxv2.6.14'' is 0.925446 and bwteen ``linuxv2.6.14'' and ``linuxv2.6.15'' is 0.9191968. The higest Jaccard distance we have measured is 0.940 which is between 2.6.20 and 2.6.21 on the other hand the lowest distance is 0.906 between 2.6.30 and 2.6.31. Table 7 shows some Jaccard distances for release pairs and in Table 8 we see the Jaccard distance within the same releases between different perilds MP, RDP and RTR.
+Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for in a particular release as the set A and files worked for in another release is set B. We found that Jaccard distance between two consecutive releases are not too high. For example jaccard bwteen release ``linuxv2.6.13'' and ``linuxv2.6.14'' is 0.925446 and bwteen ``linuxv2.6.14'' and ``linuxv2.6.15'' is 0.9191968. The higest Jaccard distance we have measured is 0.940 which is between 2.6.20 and 2.6.21 on the other hand the lowest distance is 0.906 between 2.6.30 and 2.6.31. Table 7 shows some Jaccard distances for release pairs.
 
 \begin{table}[ht]
 \caption{Jaccard Distance between Releases}  % title of Table
@@ -340,44 +334,24 @@ linuxv2.6.17			& linuxv2.6.18		& 0.929941 	\\
 linuxv2.6.18			& linuxv2.6.19		& 0.937535	\\
 linuxv2.6.19			& linuxv2.6.20		& 0.935265 	\\
 linuxv2.6.20			& linuxv2.6.21		& 0.940366 	\\
-linuxv2.6.21			& linuxv2.6.22		& 0.920760 	\\
-linuxv2.6.22			& linuxv2.6.23		& 0.921652 	\\
-linuxv2.6.23			& linuxv2.6.24		& 0.929194 	\\
-linuxv2.6.24			& linuxv2.6.25		& 0.910464 	\\
+...					& ...					& ... 	\\
+...					& ...					& ... 	\\
+linuxv2.6.30			& linuxv2.6.31		& 0.906517 	\\
+...					& ...					& ... 	\\
 [1ex]							% adds vertical space
 \hline 							% inserts single line
 \end{tabular}
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-\begin{table}[ht]
-\caption{Jaccard Distance between Releases}  % title of Table
-\centering 						% used for centering table
-\begin{tabular}{c c c c}				% centered columns (4 columns)
-\hline\hline						%inserts double horizontal lines
-% table heading
-Release 				& J(MP, RDP)		& J(RDP, RTR)	& J(MP, RTR)	\\ [0.5ex]
-\hline 							% single horizontal line
-% inserting body of the table
-linuxv2.6.13			& 0.952060		& 0.921850		& 0.996786 \\
-linuxv2.6.14			& 0.958213		& 0.839313		& 0.988072 \\
-linuxv2.6.15			& 0.947005		& 0.936153		& 0.996408 \\
-linuxv2.6.16			& 0.949774		& 0.919361 		& 0.991275 \\
-linuxv2.6.17			& 0.938539		& 0.835925 		& 0.971014 \\
-linuxv2.6.18			& 0.946127		& 0.865967		& 0.990750 \\
-linuxv2.6.19			& 0.960241		& 0.845649 		& 0.993054 \\
-linuxv2.6.20			& 0.967823		& 0.804856 		& 0.995071 \\
-linuxv2.6.21			& 0.941798		& 0.835575 		& 0.989031 \\
-linuxv2.6.22			& 0.947115		& 0.928818 		& 0.997208 \\
-linuxv2.6.23			& 0.939658		& 0.909090 		& 0.995797 \\
-linuxv2.6.24			& 0.946806		& 0.871875 		& 0.989284 \\
-[1ex]							% adds vertical space
-\hline 							% inserts single line
-\end{tabular}
-\label{table:nonlin} 				% is used to refer this table in the text
-\end{table}
+We can see in figure 4 that the Jaccard distances between MP and RDP for each release. The average distance is 0.959 but the average distance after 2.6.35 has gone up than the average up to this point. So we can say that developers work in very different areas after the merge period is over and all core developments, feature developments, merging other branches regarding the previous release is done. For linux kernel development in recent releases this difference has been increased then earlier times.
 
-In table 8 last three columns representing the Jaccard distance between merge period and release development period, between release development and rush to release period, between merge period and rush to release period respectively.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{jaccardmprdp.png}
+\caption{\small \sl Jaccard Distance between the MP and RDP}
+\end{center}
+\end{figure}
 
 \section{Conclusions}
 This section will be written at the end.

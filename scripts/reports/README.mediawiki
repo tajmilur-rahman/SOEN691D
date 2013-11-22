@@ -1,0 +1,16 @@
+== Rreports for Developers' Area ==
+
+# churns_per_mp.rpt
+-- How many churns made by developers in different merge periods
+
+# churns_per_rdp.rpt
+-- How many churns made by developers in different release development periods
+
+# devs_per_mp.rpt
+-- How many developers working in different merge periods
+
+# devs_per_rdp.rpt
+-- How many developers working in different release development periods
+
+# reports.sql
+-- Containing all the sql for every report

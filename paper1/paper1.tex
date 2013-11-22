@@ -86,7 +86,7 @@ Commits those are made for pushing a release have release tags associated to the
 We have to sort out and accumulate all the commits together those are belonging to any of the releases that we have. We have all 400441 commits in our hand but though we can't plot them into a single time domain to assign different set of commits to different release periods because development goes in parallel on different branches in git so commits also go in parallel. If there are multiple branches, surely there are multiple merges and the commits prior to a crisscross merge are all ancestors of the heads of all subsequent branches \cite{bird_git}. Figure 1 shows how a git DAG looks like having so many crisscross merges in a busy branching snap-shot of the git DAG of Linux Kernel development.
 \begin{figure}
 \begin{center}
-\includegraphics[height=3.5in,width=2.5in]{gitdag.png}
+\includegraphics[height=2.5in,width=2.5in]{gitdag.png}
 \caption{\small \sl Branching in git DAG for linux kernel development.}
 \end{center}
 \end{figure}
@@ -224,7 +224,7 @@ As like MP we can extract the RDP from the releases. RDP here in Linux Kernel de
 \begin{tabular}{c c c c}				% centered columns (4 columns)
 \hline\hline						%inserts double horizontal lines
 % table heading
-Release 			& RD Start Date	& Release Date \\ [0.5ex]
+Release 			& RDP Start Date	& Release Date \\ [0.5ex]
 \hline 							% single horizontal line
 % inserting body of the table
 linuxv2.6.13		& 2005-06-29	& 2005-08-28 \\
@@ -246,18 +246,18 @@ linuxv2.6.25		& 2008-02-10	& 2008-04-16 \\
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-Along these RDs of each release period developers get involved in the development for the next release. We see in between two consecutive releases there is a merging period of time, after that development starts by pushing RCs and once RC releases stops and it takes some days of time for the preperation to publish the release. This is the end of the code development for this particular release. Usually bug fixes and small enhancement works take place here. We observed there are very few commits in this small period.
+Along these RDPs of each release period developers get involved in the development for the next release. We see in between two consecutive releases there is a merging period of time, after that development starts by pushing RCs and once RC releases stops and it takes some days of time for the preperation to publish the release. This is the end of the core development for this particular release. Usually bug fixes and small enhancement works take place here. We observed there are very few commits in this small period.
 
 These information above will greatly help us to answer our first couple of research questions.
 
 \subsection{Finding Code Ownership}
-So many developers are working from different development communities. We tried to investigate the "code ownership" \cite{mockus_case_study} evolved in Linux Kernel development. Here code ownership is going to be represented as percentage value. Considering the data that we have for complete releases (``linuxv2.6.12'' to ``linuxv3.11'') we filtered the code files and we found 75138 distinct files that have been worked on. We investigate the total number of commits, total number of churn for each and every file also how many developers contributed for these commits and changes. This information yet does not tell about the ownership. We need to find out ownership for every developers in different development areas in an RP. We already have the collection of developers working in different areas MP, RDP, RTR within an RP and stored them with corresponding file they have worked on, how many commits a developer made to a particular file and how many changes he/she has made. We now update those information with the ownership information. For calculating ownership Equation 1 is applied.
+So many developers are working from different development communities. We tried to investigate the "code ownership" \cite{mockus_case_study} evolved in Linux Kernel development. Here code ownership is going to be represented as percentage value. From the data that we have for complete releases (``linuxv2.6.13'' to ``linuxv3.11'') we found 75138 distinct files that have been churned or commited by any developers. We investigate the total number of commits, total number of churn for each and every file also how many developers contributed for these commits and changes. This information yet does not tell about the ownership, we need to find out ownership for every developers in different development areas in a Release Cycle. We already have the collection of developers working in MP and RDP within an RP and stored them with corresponding files they have worked on, how many commits a developer made to a particular file and how many changes he/she has made. We now update those information with the ownership information. Equation 1 is the base for calculating ownership.
 \begin{equation}\omega=\frac{n}{N}*100\end{equation}
 Where $\omega$ is the ownership and n is the number of total changes made by an atuthor of a file, N is the total number of changes made for a particular file.
-To determine a developer be a owner of a file we considering that if the developer makes changes more than 80\% of the total change that the file has got, then that developer can be treated as a owner of the codes of that file similarly as C. Gutwin did \cite{gutwin_awareness} for finding out the main developers' group for a project. We already mentioned that 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our release wise datasets that's why in addition to Gutwin here considering commits also to determine ownership but only for files without any add or remove lines information. If a file has no addition or deletion information (we are calling it churn) in it's commit log but has beet committed by some one at least once then that or those authors may have the ownership for that file. So the equation 1 becomes like:
+To determine a developer be a owner of a file we considering that if the developer makes changes more than 80\% of the total change that the file has got, then that developer can be treated as a owner of the codes of that file similarly as C. Gutwin did \cite{gutwin_awareness} for finding out the main developers' group for a project. We already mentioned that 14569 individual files didn't have any change (addition or deletion) but was being committed at least once. So we found them in our release wise datasets that's why in addition to Gutwin here considering commits also to determine ownership but only for files without any add or remove lines information. If a file has no addition or deletion information (i.e.\ never been churned) in it's commit log but has beet committed by some one at least once then that or those authors may have the ownership for that file. So made little change in equation 1 which becomes like:
 \begin{equation} \omega = \left\{ \begin{array}{l l} n/N & \quad \text{if $N > 0$}\\ c/C & \quad \text{if $N = 0$} \end{array} * 100 \right.\end{equation}
 Where c is the number of commits made by the author and C is the total number of commits made for the particular file.
-We calculate code ownership for all different parts MP, RDP, RTR and also for an entire release period RP. Table 6 represents a part of the data where ownerships is calculated.
+We calculate code ownership for both MP and RDP. We also canculate general ownership for all the developers for all the files they have worked ever. Table 6 represents a part of the data which shows the ownerships of the developers in each release cycle.
 
 \begin{table}[ht]
 \caption{Code Ownership in RP}  % title of Table
@@ -291,12 +291,12 @@ In the early 1990's the Linux kernel development was not so busy affair \cite{li
 
 Linux Kernel development uses Rolling Release Development Model. Usually every micro release (ex.\ linuxv2.6.x) is a major kernel release with new features, internal API changes, and more. A minor release (ex.\ linuxv3.11) can have around  10 thousand changesets with several hundred thousands of churned lines of  codes (LOC). At the beginning of each stable release the merge window i.e.\ merge period gets opened and all the accepted and stable codes from the community are merged having around 1000 of churns everyday. Merge period approximately for 14 days as shown in the figure 2. The bottom line is representing the merge windows of every releases. We don't have the merge period data for the very first one that's why it's starting from 0.
 
-After getting all the major works merged development period for the next release is announced to be opened. If the next release is going to be linuxv2.6.14 then the release pushed at the end of the merge window will be called linuxv2.6.14-rc1. \textbf{-rc1} release indecates that the time to stabilize the next kernel has begun. These candidate releases continu to be pushed for once a week. If there is any bug fix or any high-priority change only then that goes to the main line during this period. With the continuous rc releases when the new kernel seems to be stable then the it goes for the stable release. Again after the core features are pushed to the main line then merge window gets opened and accepts all other feature developments, patchsets from other branches.
+After getting all the major works merged development period for the next release is announced to be opened. If the next release is going to be linuxv2.6.14 then the release pushed at the end of the merge window will be called linuxv2.6.14-rc1. \textbf{-rc1} release indecates that the time to stabilize the next kernel has begun. These candidate releases continu to be pushed for once a week. If there is any bug fix or any high-priority change only then that goes to the main line during this period. With the continuous rc releases when the new kernel seems to be stable then the it goes for the stable release. Again after the core features are pushed to the main line, merge window gets opened and accepts all other feature developments, patchsets from other branches.
 
 \begin{figure}
 \begin{center}
 \includegraphics[height=1.7in,width=3.4in]{linxrelmergfreq.png}
-\caption{\small \sl Durations of Linux Kernel development release}
+\caption{\small \sl Durations of Merge Window and Release Cycle}
 \end{center}
 \end{figure}
 
@@ -305,46 +305,29 @@ As a summary, the description above helps to address some of the questions about
 \subsection{Difference between release segments}
 \textit{How many developers are allocated troughout different segments of a release period? What significant differ-ence can be observed between the segments of an entire release period?}
 
-In order to see how many developers contribute to the new featcher developments and how many contribute in merging and fixing, review and accepting codes from the community during the merge period, we observed the developers' are in MP and developers' area in RDP. Out of all 381152 commits belonging to any of the 340 releases 292834 commits were made during the time of merge period which is 76.82\% (more than 2/3) of the total commits.
+In order to see how many developers contribute to the new featcher developments and how many contribute in merging and fixing, review and accepting codes from the community during the merge period, we observed the developers' area in MP and developers' area in RDP. Out of all 381152 commits belonging to any of the 340 releases 292834 commits were made during the time of merge period which is 76.82\% (more than 2/3) of the total. These commits were made by 14621 individual developers where 4884 of them contributed in both merge period (around the time of RTR) and the release development period. As we have found that in total 8057 developers worked in the period of MP so we can say half of the developers those work during RTR are dedicated to this special period and half of the total are shared (work in both MP and RDP).
 
-We found that there was not a great number of people contributing during the time of merge periods. The number was pretty stedy for every releases while during the development periods we see increasing number of contributions of developers . Figure 3 illustrates this behaviour clearly.
+We found that there was not a great number of people contributing during the time of merge periods. The number was pretty stedy for every releases while during the development periods we see increasing number of contributions of developers . In figure 3 we see the boxplot showing that around 600 developers contributes during the merge period while in release revelopment period around 1000 developers work and this contribution is in increasing order as shown in figure 4. 
 
-(TODO: Add figure for developers and churns in MP and RDP)
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{devMP_RDP_box.png}
+\caption{\small \sl Developers working in MP \& RDP}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{devRDP.png}
+\caption{\small \sl Increasing contribution in RDP}
+\end{center}
+\end{figure}
 
 Once we found different releases and the release periods as well as we calculate the developers' areas and code ownerships for developers we also would like to know what is the difference being created by making changes between the two main segments within an entire release development cycle (i.e.\ MP and RDP). To observe this we want to calculate the difference using Jaccard Similarity Coefficient \cite{jaccard_alpine} which is represented by equation 3.
 \begin{equation} J(A, B) =\frac{|A \cap B|}{|A \cup B|} \end{equation}
 The Jaccard Distance can be obtained by subtracting the Jaccard Coefficient from 1.
 \begin{equation} d_j(A, B) = 1 - J(A, B) = \frac{|A \cup B|-|A \cap B|}{|A \cup B|} \end{equation}
-Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for in a particular release as the set A and files worked for in another release is set B. We found that Jaccard distance between two consecutive releases are not too high. For example jaccard bwteen release ``linuxv2.6.13'' and ``linuxv2.6.14'' is 0.925446 and bwteen ``linuxv2.6.14'' and ``linuxv2.6.15'' is 0.9191968. The higest Jaccard distance we have measured is 0.940 which is between 2.6.20 and 2.6.21 on the other hand the lowest distance is 0.906 between 2.6.30 and 2.6.31. Table 7 shows some Jaccard distances for release pairs.
-
-\begin{table}[ht]
-\caption{Jaccard Distance between Releases}  % title of Table
-\centering 						% used for centering table
-\begin{tabular}{c c c}				% centered columns (3 columns)
-\hline\hline						%inserts double horizontal lines
-% table heading
-From 				& To		& Jaccard Distance	\\ [0.5ex]
-\hline 							% single horizontal line
-% inserting body of the table
-linuxv2.6.13			& linuxv2.6.14		& 0.925446	\\
-linuxv2.6.14			& linuxv2.6.15		& 0.919196	\\
-linuxv2.6.15			& linuxv2.6.16		& 0.917945	\\
-linuxv2.6.16			& linuxv2.6.17		& 0.916900 	\\
-linuxv2.6.17			& linuxv2.6.18		& 0.929941 	\\
-linuxv2.6.18			& linuxv2.6.19		& 0.937535	\\
-linuxv2.6.19			& linuxv2.6.20		& 0.935265 	\\
-linuxv2.6.20			& linuxv2.6.21		& 0.940366 	\\
-...					& ...					& ... 	\\
-...					& ...					& ... 	\\
-linuxv2.6.30			& linuxv2.6.31		& 0.906517 	\\
-...					& ...					& ... 	\\
-[1ex]							% adds vertical space
-\hline 							% inserts single line
-\end{tabular}
-\label{table:nonlin} 				% is used to refer this table in the text
-\end{table}
-
-We can see in figure 4 that the Jaccard distances between MP and RDP for each release. The average distance is 0.959 but the average distance after 2.6.35 has gone up than the average up to this point. So we can say that developers work in very different areas after the merge period is over and all core developments, feature developments, merging other branches regarding the previous release is done. For linux kernel development in recent releases this difference has been increased then earlier times.
+Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for, in a particular release. If set A is the set of files worked in MP and files worked for in another release is set B then In figure 5 the Jaccard distances between MP and RDP for each release can be represented. The average distance is 0.959 but the average distance after release ``linuxv2.6.39'' has gone up than the average up to this point. So we can say that developers work in very different areas once the merge window is closed and all core developments, feature developments, merging other branches regarding the previous release are done. Regarding the increase in the Jaccard Distance for the minor releases (since linuxv3.0) we can say that in minor releases developers work in more versatile areas than micro releases.
 
 \begin{figure}
 \begin{center}
@@ -352,6 +335,16 @@ We can see in figure 4 that the Jaccard distances between MP and RDP for each re
 \caption{\small \sl Jaccard Distance between the MP and RDP}
 \end{center}
 \end{figure}
+
+\subsection{Developers' contributions around the time of release}
+\textit{Do developers work on different areas of the system around the time of release?}\newline
+\textit{How do developers own code around t he system?}
+
+Developers work for the software continuously. Some are working for the core development some are working for the fixing and minor enhancements and some for feature developments, planning to merge new feature with any future release but we would like to understand what amount of changes they make during the time of regular development period and what amount the changes they make during the time of RTR. We also want to know about the code ownership of the developers around the time of release and general code ownership i.e.\ which files a developer has worked making more than 80% chruns in his lifetime.
+
+We examine contribution in writing code and making churns. Figure 6 plots the representation of code churns and ownerships per developer.
+
+(TODO: line chart representing churned files line, owned files line. x-axis : developers, y-axis : files churned)
 
 \section{Conclusions}
 This section will be written at the end.

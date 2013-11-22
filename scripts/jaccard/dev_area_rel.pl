@@ -40,10 +40,11 @@ my $dev_area = $dbh_ref->prepare(q{
 		sum(add+remove) as churn,
 		0
 	from 
-		git_revision r, git_commit c
+		git_commit_release cr, git_revision r, git_commit c
                                     
 	where 
-		c.commit = r.commit 
+		c.commit = r.commit
+		and r.commit = cr.commit
 		and c.committer_dt > ? 
 		and c.committer_dt <= ?
 	group by

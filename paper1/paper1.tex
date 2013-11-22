@@ -287,7 +287,7 @@ In this section we present results from several quantitative analysis of the arc
 
 \textit{What is the release process used by the project?}
 
-In the early 1990's the Linux kernel development was not so busy affair \cite{linux_kernel}. There were very small number of users and developers involved at that time. Developers use a loosely time-based release process. Linux publishes it's major kernel release in every two or three months. If we look at figure 2 the Release Duration Line represents how the stable releases are going on since 2005. From the figure we can see the average duration of each stable release is 62.47 although ``linuxv2.6.24'' was significantly hight as exception, it took 92.8 days.
+In the early 1990's the Linux kernel development was not so busy affair \cite{linux_kernel}. There were very small number of users and developers involved at that time. Developers use a loosely time-based release process. Linux publishes it's major kernel release in every two or three months. If we look at figure 2 the upper Line represents how the stable releases are going on since 2005. From the figure we can see the average duration of each stable release is 62.47 although ``linuxv2.6.24'' was significantly hight as exception, it took 92.8 days. The bottom line which is much steady than the upper one is representing the durations of merge period in each stable release. If we put the releases in a time domain we can see a picture shown in figure 3 where we see that the stable releases are all going on maintaining almost a similar frequency and similar pattern. The highest picks are the merge periods then the smaller picks between the highest ones are representing the rc releases. For more clear view we have plotted only 100 releases of all 340 releases.
 
 Linux Kernel development uses Rolling Release Development Model. Usually every micro release (ex.\ linuxv2.6.x) is a major kernel release with new features, internal API changes, and more. A minor release (ex.\ linuxv3.11) can have around  10 thousand changesets with several hundred thousands of churned lines of  codes (LOC). At the beginning of each stable release the merge window i.e.\ merge period gets opened and all the accepted and stable codes from the community are merged having around 1000 of churns everyday. Merge period approximately for 14 days as shown in the figure 2. The bottom line is representing the merge windows of every releases. We don't have the merge period data for the very first one that's why it's starting from 0.
 
@@ -300,6 +300,13 @@ After getting all the major works merged development period for the next release
 \end{center}
 \end{figure}
 
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{relTimeDomain100.png}
+\caption{\small \sl Time Domain for Releases}
+\end{center}
+\end{figure}
+
 As a summary, the description above helps to address some of the questions about how Linux Kernel development is organized. Answer to this first research question provides essential background for understanding our quantitative results. We will look into more detail of the development process, distribution of developers among the release segments as well as will try to find answers for our other research questions in the next sections.
 
 \subsection{Difference between release segments}
@@ -307,7 +314,7 @@ As a summary, the description above helps to address some of the questions about
 
 In order to see how many developers contribute to the new featcher developments and how many contribute in merging and fixing, review and accepting codes from the community during the merge period, we observed the developers' area in MP and developers' area in RDP. Out of all 381152 commits belonging to any of the 340 releases 292834 commits were made during the time of merge period which is 76.82\% (more than 2/3) of the total. These commits were made by 14621 individual developers where 4884 of them contributed in both merge period (around the time of RTR) and the release development period. As we have found that in total 8057 developers worked in the period of MP so we can say half of the developers those work during RTR are dedicated to this special period and half of the total are shared (work in both MP and RDP).
 
-We found that there was not a great number of people contributing during the time of merge periods. The number was pretty stedy for every releases while during the development periods we see increasing number of contributions of developers . In figure 3 we see the boxplot showing that around 600 developers contributes during the merge period while in release revelopment period around 1000 developers work and this contribution is in increasing order as shown in figure 4. 
+We found that there was not a great number of people contributing during the time of merge periods. The number was pretty stedy for every releases while during the development periods we see increasing number of contributions of developers . In figure 4 we see the boxplot showing that around 600 developers contributes during the merge period while in release revelopment period around 1000 developers work and this contribution is in increasing order as shown in figure 5. 
 
 \begin{figure}
 \begin{center}
@@ -327,7 +334,7 @@ Once we found different releases and the release periods as well as we calculate
 \begin{equation} J(A, B) =\frac{|A \cap B|}{|A \cup B|} \end{equation}
 The Jaccard Distance can be obtained by subtracting the Jaccard Coefficient from 1.
 \begin{equation} d_j(A, B) = 1 - J(A, B) = \frac{|A \cup B|-|A \cap B|}{|A \cup B|} \end{equation}
-Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for, in a particular release. If set A is the set of files worked in MP and files worked for in another release is set B then In figure 5 the Jaccard distances between MP and RDP for each release can be represented. The average distance is 0.959 but the average distance after release ``linuxv2.6.39'' has gone up than the average up to this point. So we can say that developers work in very different areas once the merge window is closed and all core developments, feature developments, merging other branches regarding the previous release are done. Regarding the increase in the Jaccard Distance for the minor releases (since linuxv3.0) we can say that in minor releases developers work in more versatile areas than micro releases.
+Here A and B are two sets. For calculating Jaccard Distance between two releases we are considering the files that have been worked for, in a particular release. If set A is the set of files worked in MP and files worked for in another release is set B then In figure 6 the Jaccard distances between MP and RDP for each release can be represented. The average distance is 0.959 but the average distance after release ``linuxv2.6.39'' has gone up than the average up to this point. So we can say that developers work in very different areas once the merge window is closed and all core developments, feature developments, merging other branches regarding the previous release are done. Regarding the increase in the Jaccard Distance for the minor releases (since linuxv3.0) we can say that in minor releases developers work in more versatile areas than micro releases.
 
 \begin{figure}
 \begin{center}
@@ -338,11 +345,13 @@ Here A and B are two sets. For calculating Jaccard Distance between two releases
 
 \subsection{Developers' contributions around the time of release}
 \textit{Do developers work on different areas of the system around the time of release?}\newline
-\textit{How do developers own code around t he system?}
+\textit{How do developers own code around the system?}
 
-Developers work for the software continuously. Some are working for the core development some are working for the fixing and minor enhancements and some for feature developments, planning to merge new feature with any future release but we would like to understand what amount of changes they make during the time of regular development period and what amount the changes they make during the time of RTR. We also want to know about the code ownership of the developers around the time of release and general code ownership i.e.\ which files a developer has worked making more than 80% chruns in his lifetime.
+We are supposed to find the answers for the two research questions together in this section. Developers work for the software continuously. Some are working for the core development some people are for the fixing and minor enhancements and some for feature developments, planning to merge new features with any up coming release but we would like to understand what number of files they change during the time of regular development period and how many during the time of RTR. How many of them they really own and how many files they work that they do not own. We also want to know about the code ownership of the developers around the time of release and general code ownership i.e.\ which files a developer has worked making more than 80% chruns in his lifetime.
 
-We examine contribution in writing code and making churns. Figure 6 plots the representation of code churns and ownerships per developer.
+Since the release of ``linuxv2.6.13'' till ``linuxv3.11'' 2889 developers out of 14621 worked for the files they owned. They have worked for other files also. So the percentage of working with owned files is 19.82% through out the life time (here 2.6.13 to 3.11).
+
+We examine the contribution in writing code and making churns by the developers. Figure 7 plots the cumulative representation of code churns and ownerships per developer.
 
 (TODO: line chart representing churned files line, owned files line. x-axis : developers, y-axis : files churned)
 

@@ -18,3 +18,12 @@ select author,release,count(distinct path) from dev_area_dev group by release,au
 
 #How many distinct files worked in MP by each developer
 select author,release,count(distinct path) from dev_area_merge group by release,author order by author asc;
+
+#In life time which files developers are working that they own the file?
+select author,path,owned from developer_file_ownership where owned=1;
+
+#In merge periods for all releases which files developers are working that they own the file?
+select author,path,owned from dev_area_merge where owned=1;
+
+#In release development periods for all releases which files developers are working that they own the file?
+select author,path,owned from dev_area_merge where owned=1;

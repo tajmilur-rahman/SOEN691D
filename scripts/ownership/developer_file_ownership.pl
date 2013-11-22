@@ -28,7 +28,8 @@ my $get_file_info = $dbh_ref->prepare(q{
 	from
 		git_commit_release cr, git_revision r, git_commit c
 	where 
-		c.commit = r.commit and r.commit=cr.commit
+		c.commit = r.commit
+		and r.commit=cr.commit
 		and path = ?
 	group by new_path;
 });

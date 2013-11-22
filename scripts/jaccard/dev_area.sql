@@ -21,6 +21,7 @@ create table dev_area_merge (
 	ownership numeric,
 	PRIMARY KEY (author, release, path)
 );
+alter table dev_area_merge add column owned integer not null default 0;
 
 drop table if exists dev_area_dev;
 create table dev_area_dev (

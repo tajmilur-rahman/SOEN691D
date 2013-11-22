@@ -26,3 +26,5 @@ create table developer_file_ownership (
     ownership numeric,
     primary key (author, path)
 );
+alter table developer_file_ownership add column owned integer not null default 0;
+

@@ -52,7 +52,7 @@ We will be giving a qualitative description of Linux Kernel development in brief
 Answer to this question will give us a big picture of Linux Kernel development community as well as the contrubution of developers in different periods within a stable release period. We will calculate Jaccard Distance to differentiate the behavior of developers during RTR and normal development period.
 \item Do developers work on different areas of the system around the time of release? \newline
 We want to see if developers are looking at different types of files in the code-base around the time of release which is being considered as the merge period or merge window\cite{linux_kernel}. We are expecting this would be the RTR are in a release time where technical debt may be introduced.
-\item How do developers own code around t he system?
+\item Do developers mostly work on their own codes around the system?
 Many developers are working on many files. We will find out which files has been churned mostly by which developer so that we can understand how developers are distributed among the system.
 \item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)? \newline
 To answer this question we will look into the frequency of file churns made into files. Difference or distance of the files between normal development period and the RTR period or merge period of a release.
@@ -318,7 +318,7 @@ We found that there was not a great number of people contributing during the tim
 
 \begin{figure}
 \begin{center}
-\includegraphics[height=1.7in,width=3.4in]{devMP_RDP_box.png}
+\includegraphics[height=1.7in,width=3.4in]{devMPRDPBox.png}
 \caption{\small \sl Developers working in MP \& RDP}
 \end{center}
 \end{figure}
@@ -345,15 +345,48 @@ Here A and B are two sets. For calculating Jaccard Distance between two releases
 
 \subsection{Developers' contributions around the time of release}
 \textit{Do developers work on different areas of the system around the time of release?}\newline
-\textit{How do developers own code around the system?}
+\textit{Do developers mostly work on their own codes around the system?}
 
-We are supposed to find the answers for the two research questions together in this section. Developers work for the software continuously. Some are working for the core development some people are for the fixing and minor enhancements and some for feature developments, planning to merge new features with any up coming release but we would like to understand what number of files they change during the time of regular development period and how many during the time of RTR. How many of them they really own and how many files they work that they do not own. We also want to know about the code ownership of the developers around the time of release and general code ownership i.e.\ which files a developer has worked making more than 80% chruns in his lifetime.
+We are supposed to find the answers for the two research questions together in this section. Developers work for the software continuously. Some are working for the core development some people are for the fixing and minor enhancements and some for feature developments, planning to merge new features with any up coming release but we would like to understand what number of files they change during the time of regular development period and how many during the time of RTR. How many of them they really own and how many files they work that they do not own. We also want to know about the code ownership of the developers around the time of release and general code ownership i.e.\ which files a developer has worked making more than 80\% chruns in lifetime.
 
-Since the release of ``linuxv2.6.13'' till ``linuxv3.11'' 2889 developers out of 14621 worked for the files they owned. They have worked for other files also. So the percentage of working with owned files is 19.82% through out the life time (here 2.6.13 to 3.11).
+Since the release of ``linuxv2.6.13'' till ``linuxv3.11'' 2889 developers out of 14621 worked for the files they owned. Although they have worked for other files that they do not own. So the percentage of working with owned files is 19.82\% through out the life time (release 2.6.13 to 3.11). We examine the contribution in writing code and making churns by the developers to understand the behaviour and to see if the impact of this 19.82\% on the graph. Figure 7 plots the cumulative representation of churnes files and percentage of owned files per developer for a particular release ``linuxv2.6.13''. If I say in details, in the increase of every 10 developers it is observed that developers work increasingly more unknown files than the files they own or they are very familier to. We see the similar picture for other releases too.
+So we can say that in Linux Kernel development developers work in more unfamilier files than the most familier (i.e.\ more than 80\%) ones.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{cumulativeChurnOwnershipPercent.png}
+\caption{\small \sl Cumulative Number of Churns vs Percentage of Owned Files in release 2.3.13}
+\end{center}
+\end{figure}
 
-We examine the contribution in writing code and making churns by the developers. Figure 7 plots the cumulative representation of code churns and ownerships per developer.
+To understand the distribution of the developers around the system we also found that during these release periods 8057 developers have experience of working in the merge meriod and 14621 developers worked in the release development period as we already mentioned earlier but we noted that 4884 developers work in both the parts. So almost half of the developers that work in merge period also work in the release development period. Figure 8 shows the Venn diagram.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{devDistMPRDP.png}
+\caption{\small \sl Developers' Distribution in Merge Period and Development Period}
+\end{center}
+\end{figure}
 
-(TODO: line chart representing churned files line, owned files line. x-axis : developers, y-axis : files churned)
+If we compare the percentage of working in owned files ($\omega$\textit{P}) in merge period and the percentage of working in owned files in general ($\Omega$\textit{P}) for the life time for each developer works in the merge period then we see a very significant difference as shown in figure 9.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{ownedFilesMPRDPBox.png}
+\caption{\small \sl Percentage of working in owned files during Merge Period and the that of life time}
+\end{center}
+\end{figure}
+We still interested to see the correlation of $\omega$\textit{P} with $\Omega$\textit{P} to get more idea about the role of merge period over the role in general for any other time in release development. Figure 10 plots the graphical representation of the correlation.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{owPercentMPRDPCorr.png}
+\caption{\small \sl X axis: \% of working in owned files during Merge Period, Y axis: \%of working in owned files during Release Development Period}
+\end{center}
+\end{figure}
+As we find the residual standard error is 33.69 on 8055 degrees of freedom  and the multiple R-squared value is 0.04803, Adjusted R-squared value is 0.04791. We found the F-statistic 406.4 and the p-value is < 2.2e-16.
+
+If we add other independent variables ``churn frequency in merge period (\c{c}\textit{F})'', ``churn frequency in general (\c{C}\textit{F})'' and ``average ownership for the life time ($\omega$\textit{Avg})'' then the correlation looks like as shown in figure 11.
+
+
+
+So, finally we can say that in merge periods developers work on more native codes while during the regular release development period the percentage of working with native code is very less in number.
 
 \section{Conclusions}
 This section will be written at the end.

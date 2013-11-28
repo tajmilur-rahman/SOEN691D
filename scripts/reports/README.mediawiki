@@ -12,42 +12,15 @@
 # devs_per_rdp.rpt
 -- How many developers working in different release development periods
 
-# Corr 1: Get the correlation between the percentage of working with owned files in MP and that in RDP
-
-Code:===================
-m <- lm(owMPRDP$op_mp~owMPRDP$op_rdp)
-> plot(owMPRDP$op_mp~owMPRDP$op_rdp)
-> abline(m)
-> 
-> summary(m)
-========================
-
-lm(formula = owMPRDP$op_mp ~ owMPRDP$op_rdp)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--97.844 -31.255  -6.255  18.745  68.745 
-
-Coefficients:
-               Estimate Std. Error t value Pr(>|t|)    
-(Intercept)    31.25514    0.40494   77.19   <2e-16 ***
-owMPRDP$op_rdp  0.66589    0.03303   20.16   <2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-
-Residual standard error: 33.69 on 8055 degrees of freedom
-Multiple R-squared: 0.04803,	Adjusted R-squared: 0.04791 
-F-statistic: 406.4 on 1 and 8055 DF,  p-value: < 2.2e-16 
-
- 
-# Corr 2: Get the correlation between the percentage of working with owned files in MP and that in RDP for the developers working in MP
+# Corr 2: Get the correlation between the percentage of working with owned files in MP and that in General for the developers working in MP
 
 Main Variable: percentage_of_owned_files_mp
 Independent Variables: percentage of working owned files in geneneral (op_gen), average ownership (ow_avg), churn_percentage mp (chp_mp), churn percentage general (chp_gen)
+
 ## Linear Model
 
 Call:
-lm(formula = table[[a[1]]] ~ table[[b[1]]] + table[[b[2]]] + table[[b[3]]] + table[[b[4]]])
+lm(formula = table[[a[1]]] ~ table[[b[1]]] + table[[b[2]]] + table[[b[3]]] + table[[b[4]]]) # for all variables
 
 Residuals:
      Min       1Q   Median       3Q      Max

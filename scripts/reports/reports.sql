@@ -40,7 +40,7 @@ select author, count(path) as files, sum(churn) as tch, round(cast(sum(owned) as
 #Percentage of working with owned files in MP
 select author, count(path) as files, sum(churn) as tch, round(cast(sum(owned) as numeric)/cast(count(path) as numeric),2)*100 as op from dev_area_merge group by author order by author;
 
-#Percentage of working with owned files in MP and RDP
+#Percentage of working with owned files in MP and life time
 select b.op as op_MP, a.op as op_RDP
 
 from (
@@ -64,5 +64,10 @@ from (
 ) b
 
 where a.author=b.author;
+
+
+#Percentage of working with owned files in RDP
+select author, count(path) as files, sum(churn) as tch, round(cast(sum(owned) as numeric)/cast(count(path) as numeric),2)*100 as op from dev_area_dev group by author order by author;
+
 
 

@@ -1,0 +1,65 @@
+table <- read.table("C:/Users/Latifa/Desktop/Project_SCL/ALL-Data-V1.csv", header = TRUE,sep=",")
+
+
+
+# sottoinsieme delle colonne della tabella su cui calcolare la correlazione
+
+a<-c("Developers","Type_ids","Number_ids","CamelCase","Underscore","CamelUnderscore","NoStyle")
+
+#a<-c("Number_bugs")
+
+#b<-c("Files","Commits","Project_age", "Entropy")
+
+b<-c("Number_bugs")
+
+#CALCOLO PRIMA TABELLA
+
+res<-list(M1=c(),M2=c(),RHO=c(),PVALUE=c())#inizializzazione lista
+
+#cicli senza ripetizioni
+
+for(i in 1:(length(a))){
+
+  for(j in (1):length(b)){
+
+    #cicli con senza ripetizioni
+
+    #for(i in 1:(length(a))){
+
+    #for(j in (1):length(a)){
+
+    # con 'table[[a[i]]]' selezioniamo la colonna di 'table' che ha 'header=a[i]'
+
+    # method = c("pearson", "kendall", "spearman")
+
+    m<-cor.test(table[[a[i]]],table[[b[j]]],method="spearman")
+
+    res$M1<-c(res$M1,a[i])
+
+    res$M2<-c(res$M2,b[j])
+
+    res$RHO<-c(res$RHO,m$estimate)
+
+    res$PVALUE<-c(res$PVALUE,m$p.value)
+
+    }
+    }
+#creiamo il codice latex
+
+res=data.frame(res)
+
+write.table(res,"C:/Users/Latifa/Desktop/Project_SCL/Results_Entropy_Bugs_Correlations_Max.csv",sep = ",",row.names=FALSE)
+
+__END__
+
+for(i in 1:(length(a))){
+  for(j in (1):length(b)){
+    # method = c("pearson", "kendall", "spearman")
+    m<-cor.test(table[[a[i]]],table[[b[j]]],method="spearman")
+    res$M1<-c(res$M1,a[i])
+    res$M2<-c(res$M2,b[j])
+    res$RHO<-c(res$RHO,m$estimate)
+    res$PVALUE<-c(res$PVALUE,m$p.value)
+  }
+}
+res=data.frame(res)

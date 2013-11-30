@@ -19,20 +19,16 @@ my $dbh_ref = DBI->connect("dbi:Pg:database=$config{db_name}", '', '', {AutoComm
 
 my ($prev_release, $release);
 
-my $query_insert = $dbh_ref->prepare(q{
-	insert into jac_dist(release) values(?)
-});
-
 #************* Calculate Jaccard Distance Between Merge Period and Development Period *******#
 #****************************** For ALl Releases ********************************************#
 my $md_union = $dbh_ref->prepare(q{
 	select count(*)
 	from (
-		select author, path 
+		select path 
 		from dev_area_merge
 		where release = ? 
 		UNION
-		select author, path 
+		select path 
 		from dev_area_dev 
 		where release = ?
 	) as r
@@ -40,27 +36,22 @@ my $md_union = $dbh_ref->prepare(q{
 my $md_intersection = $dbh_ref->prepare(q{
 	select count(*)
 	from (
-		select author, path
+		select path
 		from dev_area_merge
 		where release = ?
 		INTERSECT
-		select author, path 
+		select path 
 		from dev_area_dev
 		where release = ?
 	) as r
 });
 
 my $query_update = $dbh_ref->prepare(q{
-	update jac_dist set jd_merge_dev=? where release=?
+	update jac_dist set jd_merge_rel=? where release=?
 });
 
 my $get_releases = $dbh_ref->prepare(q{
-	select 	distinct p, date
-	from 	(
-			select 	substring(path, '(linuxv[0-9]*\.[0-9]?\.?[0-9]*)') as p, date
-			from 	git_refs_tags
-		) a
-	order by a.date
+	select 	release from stable_releases
 });
 
 $get_releases->execute or die;
@@ -78,8 +69,7 @@ while ( ($release) = $get_releases->fetchrow_array) {
 		if($mdu > 0){
 			$jac_dist_md = ($mdu - $mdi) / $mdu;
 			print "$release - $jac_dist_md\n";
-			$query_update->execute($jac_dist_md, $release)
-				or die("Could not update jac_dist");
+			$query_update->execute($jac_dist_md, $release) or die("Could not update jac_dist");
 		}else{
 			print "Union is <= 0\n";
 		}
@@ -90,7 +80,6 @@ while ( ($release) = $get_releases->fetchrow_array) {
 $md_union->finish;
 $md_intersection->finish;
 $query_update->finish;
-$query_insert->finish;
 $get_releases->finish;
 
 $dbh_ref->disconnect;

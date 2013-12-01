@@ -68,7 +68,24 @@ select count(distinct dd.author) from (select distinct author from dev_area_merg
 select a.release, a.devs as devs_mp, b.devs as devs_rp from (select release, count(author) as devs from dev_area_merge group by release) a, (select release, count(author) as devs from dev_area_dev group by release) b where a.release=b.release order by a.release;
 
 
+# Select percentage of working in owned files in merge period and percentage of working in owned file in release period (for those who work in both periods)
 
+select	a.ownp as ownp_mp,b.ownp as ownp_rp
+from 	(
+		select
+		author,round(cast(sum(owned) as numeric)/cast(count(path) as numeric),2)*100 as ownp 
+		from 	dev_area_merge 
+		group 	by author
+		order  	by author
+	) a,
+	(
+		select
+		author,round(cast(sum(owned) as numeric)/cast(count(path) as numeric),2)*100 as ownp 
+		from dev_area_dev 
+		group by author
+		order  by author
+	) b
+where	a.author=b.author;
 
 
 
@@ -89,7 +106,7 @@ select author,release,count(distinct path) from dev_area_dev group by release,au
 # How many distinct files worked in Merge Period by each developer
 select author,release,count(distinct path) from dev_area_merge group by release,author order by author asc;
 
-# In life time which files developers are working that they own the file?
+# In the life time which files developers are working that they own the file?
 select author,path,owned from developer_file_ownership where owned=1;
 
 # In merge periods for all releases which files developers are working that they own the file?

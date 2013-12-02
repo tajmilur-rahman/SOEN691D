@@ -193,7 +193,7 @@ For 2.6.13
                   NA   :    2.00
 
 
-Files getting increased attention during release period (churns > 5000):
+## Files getting increased attention during release period (churns > 5000):
 select count(*) from (select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev group by release,path) a where t_churn > 5000 order by a.release,a.t_churn desc) b group by b.release;
 
    release    |                      path                       | t_commit | t_churn 
@@ -319,8 +319,28 @@ select author, count(*) from (select * from (select release,author,count(path) t
 : We see only 54 developers works in more than 100 files during the release periods of Linux Kernel releases. 2 authors worked in more than 100 files 6 and 5 times, 2 authors 3 times, 7 authors 2 times and rest of the 43 authors worked in >100 files 1 times each.
 
 
+## Find the jaccard similarity between the sets of files having high focus on them in different releases
+Files in linuxv2.6.13 having high attention A:
+select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.13' group by release,path) a where t_churn > 1000 order by a.release,a.t_churn desc;
+Files in linuxv2.6.14 having high attention B:
+select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.14' group by release,path) a where t_churn > 1000 order by a.release,a.t_churn desc;
+Files in linuxv2.6.15 having high attention C:
+select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.15' group by release,path) a where t_churn > 1000 order by a.release,a.t_churn desc;
 
+J(A,B) = (AnB)/(AuB): 0
+AuB:
+(select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.13' group by release,path) a where t_churn > 1000)
+union
+(select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.14' group by release,path) a where t_churn > 1000);
 
+AnB:
+(select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.13' group by release,path) a where t_churn > 1000)
+intersect
+(select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.14' group by release,path) a where t_churn > 1000);
+
+J(B,C) = 0.038
+BnC = 1
+BuC = 26
 
 # Developers work in both Merge Period and Release Period - devs_worked_in_MP_RDP.rpt
 (select author from dev_area_merge) intersect (select author from dev_area_dev);

@@ -52,12 +52,12 @@ We will be giving a qualitative description of Linux Kernel development in brief
 Answer to this question will give us a big picture of Linux Kernel development community as well as the contrubution of developers in different periods within a stable release period. We will calculate Jaccard Distance to differentiate the behavior of developers during release period and development period.
 \item Do developers work on different areas of the system around the time of release? \newline
 We want to see if developers are looking at different types of files in the code-base around the time of release which is being considered as the release period or rc period. We are expecting this would be the RTR in a release cycle which may introduce technical debts.
-\item Do developers work in others' code in a high proportion during the rush period?
+\item Do developers work in others' code in a high proportion during the rush period?\newline
 Developers work on various files during release period. We will try to find out what is the percentage of dealing with files that developers own or they are most familier to. This will give us a sense of the nature of work during release time.
-\item How long a commit takes to get pushed into the main kernel? Does it differ in different periods of release?
+\item How long a commit takes to get pushed into the main kernel? Does it differ in different periods of release?\newline
 In distributed development environment developers work in different branches they commit their codes to the branches they are associated to. Developers in that case do not directly push their changes to the main branch. We would like to see how much time it takes for a commit to the local branch to get pushed to the main branch. We also should understand how long it takes for regular development commits and how long it takes for the commits made around the release period.
 \item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)? \newline
-To answer this question we will look into the frequency of file churns made into files. Difference or distance of the files between normal development period and the release period of a release.
+To answer this question we will look into the files getting churned extremely high in number. We will try to figure out the difference between those highly churned or highly focused sets of files in different releases to understand if they require contantly high focus or they are only for one particular release.
 \end{enumerate}
 
 \section{Background}
@@ -450,7 +450,14 @@ Tejun Heo					& 2.6.34		& 34\% 				& 4222\\
 \label{table:nonlin} 				% is used to refer this table in the text
 \end{table}
 
-So, we can say that there are certain areas of the system that takes certainly increased attention also there are few developers who deals with extremely large number of files at the time of release. Some of them work less than 40\% files that they own and some developers work around 70\% of files that they own. Now we would like to see if these areas having increased attention get the similar attention in other releases. In this occassion we would like find the Jaccard distance for these areas in consicutive releases.
+So, we can say that there are certain areas of the system that takes certainly increased attention also there are few developers who deals with extremely large number of files at the time of release. Some of them work less than 40\% files that they own and some developers work around 70\% of files that they own. Now we would like to see if these areas having increased attention get the similar attention in other releases. In this occassion we would like find the Jaccard similarity index for these areas in consicutive releases. First we collected the sets of files those are having highly increasing focus during the release periods of different release cycles. Then we calculated the union and intersection operation between two consicutive sets as well as randomly. We applied equation 2 to find  out the similarity among the sets and we see there is no similarity between those sets except for couple of pairs of releases like linuxv2.6.14~linuxv2.6.15,  linuxv2.6.29~linuxv2.6.30, linuxv2.6.30~linuxv2.6.31 and linuxv2.6.34~linuxv2.6.35 where the similarity index is too low to say similar; they are 0.038, 0.066, 0.025 and 0.181 respectively as shown in figure 14. From this we understand that developers working for different and various features, developing new staffs for linux kernel working in many different files and merging them into the main kernel during merge window. In release period small number of developers who are allowed to work in release period are reviewing those nely arrived codes and doing quick fixes and enhancements, some of them may require very high attention and more work to do. In the next release some other different new developments arrive in merge window and thus in release period developer do their candidate releases focusing on those newly arrived code files which are not related to the code files those had to get high focus in the previous release.
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3.4in]{jdRPHighFocusFiles.png}
+\caption{\small \sl Jaccard similarity index between consicutive sets of files having highly increased focus in different releases}
+\end{center}
+\end{figure}
 
 \section{Conclusions}
 This section will be written at the end.

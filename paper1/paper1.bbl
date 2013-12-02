@@ -1,0 +1,100 @@
+\begin{thebibliography}{10}
+
+\bibitem{hindle_release_pattern}
+R.~C.~H. A.~Hindle, M. W.~Godfrey.
+\newblock Release pattern discovery via partitioning: Methodology and case
+  study.
+\newblock In {\em Proceedings of the Fourth International Workshop on Mining
+  Software Repositories at ICSE Workshops MSR '07}, volume~35, page~19,
+  Minneapolis, MN, USA, 2007. MSR.
+
+\bibitem{mockus_case_study}
+J.~H. A.~Mockus, R.T.~Fielding.
+\newblock A case study of open source software development: the apache server.
+\newblock In {\em Proceedings of the 2000 International Conference on Software
+  Engineering, 2000.}, pages 263--272, June 2000.
+
+\bibitem{boehm_agile}
+B.~Boehm.
+\newblock Get ready for agile methods, with care.
+\newblock {\em ACM Computer}, 35(1):64--69, 2002.
+
+\bibitem{boehm_software_risk}
+B.~W. Boehm.
+\newblock Software risk management: Principles and practices.
+\newblock {\em IEEE Softw.}, 8(1):32--41, January 1991.
+
+\bibitem{brooks_mythical}
+F.~Brooks.
+\newblock {\em The Mythical Man-Month}.
+\newblock Addison-Wesley, 1975.
+
+\bibitem{gutwin_awareness}
+K.~S. C.~Gutwin, R.~Penner.
+\newblock Group awareness in distributed software development.
+\newblock In {\em Proceedings of the 2004 ACM Conference on Computer Supported
+  Cooperative Work}, pages 71--81, Seattle, Washington, USA, 2004. ACM.
+
+\bibitem{bird_git}
+E.~T.~B. Christian~Bird, Peter C.~Rigby.
+\newblock The promises and perils of mining git.
+\newblock In {\em 6th IEEE International Working Conference on Mining Software
+  Repositories, 2009. MSR '09}, pages 1--10, 2009.
+
+\bibitem{damian_awareness}
+J.~S. Daniel~Damian, L.~Izquierdo.
+\newblock Awareness in the wild: Why communication breakdowns occur.
+\newblock pages 81--90, 2007.
+
+\bibitem{damian_domain}
+K.~I. Daniela~Damian, Helms~Remko.
+\newblock The role of domain knowledge and cross-functional communication in
+  socio-technical coordination.
+\newblock In {\em 35th International Conference on Software Engineering, ICSE},
+  pages 442--451, 2013.
+
+\bibitem{posnett_ecological}
+P.~D. Daryl~Posnett, Raissa~D'Souza.
+\newblock Dual ecological measures of focus in software development.
+\newblock In {\em Proceeding ICSE '13 Proceedings of the 2013 International
+  Conference on Software Engineering}, pages 452--461, 2013.
+
+\bibitem{rahman_ownership}
+P.~D. F.~Rahman.
+\newblock Ownership, experience and defects: a fine-grained study of
+  authorship.
+\newblock In {\em Proceeding of the 33rd international conference on Software
+  engineering, ACM}, pages 491--500, 2011.
+
+\bibitem{linux_kernel}
+L.~K.~O. Inc.
+\newblock The linux kernel archives.
+\newblock
+  https://www.kernel.org/doc/Documentation/development-process/2.Process.
+
+\bibitem{cook_automating}
+A.~L.~W. J.~E.~Cook.
+\newblock Automating process discovery through event-data analysis.
+\newblock In {\em Proceedings of the 17th international conference on Software
+  engineering in ICSE ’95}, volume~35, pages 73--82, Seattle, Washington,
+  USA, April 1995. ACM Press.
+
+\bibitem{jaccard_alpine}
+P.~Jaccard.
+\newblock Distribution of alpine flora in the basin dranses and some
+  neighboring areas.
+\newblock In {\em Bulletin of the Waldensian Society}, volume~37, pages
+  241--272, 1901.
+
+\bibitem{cataldo_identification}
+J.~H. M.~Cataldo, P.~Wagstrom.
+\newblock Identification of coordination requirements: implications for the
+  design of collaboration and awareness tools.
+\newblock {\em CSCW}, pages 353--362, May-June 2006.
+
+\bibitem{keil_framework}
+K.~L. M.~Keil, P. E.~Cule.
+\newblock A framework for identifying software project risks.
+\newblock {\em Commun. ACM}, 41(11):76--83, November 1998.
+
+\end{thebibliography}

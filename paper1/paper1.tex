@@ -54,7 +54,7 @@ Answer to this question will give us a big picture of Linux Kernel development c
 We want to see if developers are looking at different types of files in the code-base around the time of release which is being considered as the release period or rc period. We are expecting this would be the RTR in a release cycle which may introduce technical debts.
 \item Do developers work in others' code in a high proportion during the rush period?
 Developers work on various files during release period. We will try to find out what is the percentage of dealing with files that developers own or they are most familier to. This will give us a sense of the nature of work during release time.
-\item How long a commit take to get pushed into the main kernel? Does it differ in different periods of release?
+\item How long a commit takes to get pushed into the main kernel? Does it differ in different periods of release?
 In distributed development environment developers work in different branches they commit their codes to the branches they are associated to. Developers in that case do not directly push their changes to the main branch. We would like to see how much time it takes for a commit to the local branch to get pushed to the main branch. We also should understand how long it takes for regular development commits and how long it takes for the commits made around the release period.
 \item Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)? \newline
 To answer this question we will look into the frequency of file churns made into files. Difference or distance of the files between normal development period and the release period of a release.
@@ -376,7 +376,7 @@ So we can say that in Linux Kernel development developers work in more unfamilie
 So, finally we can say that in merge periods developers work in more native codes while during the regular release development period the percentage of working with native code is very low in number although this percentage of working in owned code during merge period does not significantly relate to other co-factors.
 
 \subsection{Time for commits to go live}
-\textit{How long a commit take to get pushed into the main kernel? Does it differ in different periods of release?}
+\textit{How long a commit takes to get pushed into the main kernel? Does it differ in different periods of release?}
 
 There are thousands of commits goes to the main kernel during the merge meriod. All they are to be considered as the normal development commits or regular development or core development commits for developing new features to the kernel. Merge period remains opened for two weeks only, the development works that are supposed to go for a particular release are not developed during this couple of weeks. These have been developed since many days ago on a different development branch by any developer. For a particular feature that is going to the current release there are hundreds of commits, obviously all these commits are not made during the merge period of the current release 90-100\% commits must have been made before the opening of the merge period of current release. As described in section 4.3, we have sorted up the releases according to the git DAG. This helps us to calculate how many days in past the first commit of this particular feature had been made which is going to be pushed into the current release. The duration a commit was made to the local branch to the date it is pushed into the main branch is being called here ``lag'' of commits. Figure 10 represents lag of the commits made for regular development and lag of the commits made during the release period.
 
@@ -387,22 +387,70 @@ There are thousands of commits goes to the main kernel during the merge meriod. 
 \end{center}
 \end{figure}
 
-From figure 10 we can understand it easily that rather quick fixes are made during the release period. With the small sets of bug fixes, important wuick enhancements candidate releases are pushed and once the kernel seems to me more stable with all the new features that's been merged at the beginning of the release cycle, stable release is published. Comperatively lag for the feature development commits is quite high. Median for the lags for the commits during this time is 5.57 while median for the lags for the commits goes to the main kernel during merge period is 26.15 which is a significant different between these two periods of a release cycle.
+From figure 10 we can understand it easily that rather quick fixes are made during the release period. With the small sets of bug fixes, important quick enhancements candidate releases are pushed continuously within short period lengths of time and once the kernel seems to be more stable with all the new features that has been merged during the beginning of the release cycle, the stable release is published. Comperatively lag for the feature development commits is quite high. Median for the lags for the commits during this time is 5.57 while median for the lags for the commits goes to the main kernel during merge period is 26.15 which is a significant different between these two periods of a release cycle.
 
 \subsection{Developers' focus on code-base around the time of release}
 \textit{Are there certain areas of the system that receive increased attention (i.e.\ do developers focus on a smaller set of files around releases)?}
-Answer to the following questions are going to be looked for to answer this research question:
+
+To answer this research question we are interested to find answer to the following questions first.
 \renewcommand{\labelenumi}{q\theenumi:}
 \begin{enumerate}
-\item{How many times a file has been committed during merge period?}
-\item{How many authors made those commits?}
-\item{How many churns were made to the files during each commit?}
-\item{What is the time interval for the commits for a file?}
-\item{How many files each developer deals with during merge period?}
+\item{How many churns were made to the files during release periods?}
+\item{How many files get churns exceptionally high in number? Do we see this in every release cycles?}
 \item{How many files each developer deals with during release development period?}
-\item{What is the jaccard distance J(mp1, rdp1), J(rdp1, rdp0) and J(rdp0, mp1)?}
+\item{How many files developer deal with large number of files during release development period? What is the percentage of ownership of them while working for a large number of files in a release period?}
+\item{If there is any area that requires increased attention in the system, then what is the jaccard distance of those areas throught different releases? Are they being focused iteratively by releases?}
 \end{enumerate}
-We found the relation J(mp1, rdp1) > J(rdp1, rdp0) < J(rdp0, mp1) for the minor releases is significant but among the micro stable releases this relation is not significant at all.
+
+During the time of rc releases after all the merging jobs are done developers generally work for minor fixing and serious quick enhancements. In all these 39 release cycles of Linux Kernel development wee see in an average 3077 churns are made around the releases. The minimum value is 1691 and maximum is 8669. Median and mean values are closer enough (2668 and 3077) to say that almost similar kind of churns are made in all the release periods except couple of exceptions. If we look at figure 11 then where the normalized distribution of this data is represented then we can easily understand.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{churnRPnorm.png}
+\caption{\small \sl Normal distribution of churns per Release Period}
+\end{center}
+\end{figure}
+
+We analyzed in several releases and found that for the release ``linuxv2.6.13'' 2938 files got churned. Among them only five files had exceptionally high number of churns four of them have more than 10,000 churns. Similar picture we see for other releases also. Usually around 2000 files are worked on during the release periods except 2 releases where the number of churned files was extremely high and being marked as outliars as shown in figure 12. For almost every release cycle during the release period around 2.846 files get highly increased attention having over 5000 churns and 16.78 files having over 1000 churns as shown in figure 13.
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{fileChurnRPbox.png}
+\caption{\small \sl Files churned in release periods}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[height=1.7in,width=3in]{fileChurnRPExp1000vs5000box.png}
+\caption{\small \sl Files churned more than 1000 times and more than 5000 times during release period}
+\end{center}
+\end{figure}
+
+During the release period developers deal with various files came from different authors working in different development branches in merge window. Although the number of files developers deal with during release period is too low (mean 5.52) there is a large number of developers work for around 50 files. To look for how many developers work for fairly large number of files we decided to see which developers work for more than 100 files in the release periods.
+
+We found that there are 29 releases out of the 39 where developers are working in comperatively large number of files during the release period? Among them we noted that 5 developers in 5 different release periods worked for extremely high number of files as listed in table 6. In this table we also have represented what is the percentage of working with owned files for each developer.
+
+\begin{table}[ht]
+\caption{Developers making churn in extremely high number of files during Release Periods}  % title of Table
+\centering 						% used for centering table
+\begin{tabular}{c c c c}				% centered columns (4 columns)
+\hline\hline						%inserts double horizontal lines
+% table heading
+Author 						& Linuxv		& Owned 			& Total \\
+							& 			& Files				& Churned \\ [1ex]
+\hline 							% single horizontal line
+% inserting body of the table
+Greg Kroah-Hartman			& 3.8		& 70\%				& 1114\\
+David Howells				& 2.6.19		& 38\%				& 1140\\
+Russell King					& 2.6.27		& 70\%				& 2426\\
+Lucas De Marchi				& 2.6.39		& 64\% 				& 2466\\
+Tejun Heo					& 2.6.34		& 34\% 				& 4222\\
+[1ex]							% adds vertical space
+\hline 							% inserts single line
+\end{tabular}
+\label{table:nonlin} 				% is used to refer this table in the text
+\end{table}
+
+So, we can say that there are certain areas of the system that takes certainly increased attention also there are few developers who deals with extremely large number of files at the time of release. Some of them work less than 40\% files that they own and some developers work around 70\% of files that they own. Now we would like to see if these areas having increased attention get the similar attention in other releases. In this occassion we would like find the Jaccard distance for these areas in consicutive releases.
 
 \section{Conclusions}
 This section will be written at the end.
@@ -410,24 +458,6 @@ This section will be written at the end.
 
 \bibliographystyle{abbrv}
 \bibliography{paper1} 
-\appendix
-%Appendix A
-\section{Headings in Appendices}
-Apendix section will be written later with the following subsections may be:
-\subsection{Introduction}
-...
-\subsection{Background and Motivation}
-\subsubsection{Related Works}
-...
-\subsubsection{Methodology and Data}
-...
-\subsection{Conclusions}
-...
-\subsection{Acknowledgments}
-...
-
-\subsection{References}
-... ...
 
 \balancecolumns
 \end{document}

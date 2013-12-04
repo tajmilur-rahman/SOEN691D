@@ -327,7 +327,7 @@ select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn fro
 Files in linuxv2.6.15 having high attention C:
 select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.15' group by release,path) a where t_churn > 1000 order by a.release,a.t_churn desc;
 
-J(A,B) = (AnB)/(AuB): 0
+2.6.13~2.6.14: J(A,B) = (AnB)/(AuB): 0
 AuB:
 (select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.13' group by release,path) a where t_churn > 1000)
 union
@@ -338,9 +338,11 @@ AnB:
 intersect
 (select * from (select release,path,sum(commits) t_commit, sum(churn) t_churn from dev_area_dev where release='linuxv2.6.14' group by release,path) a where t_churn > 1000);
 
-J(B,C) = 0.038
-BnC = 1
-BuC = 26
+2.6.14~2.6.15:
+J(B,C) = 0.038 [BnC = 1, BuC = 26]
+2.6.15~2.6.16: J(C,D) = 0
+2.6.16~2.6.17: J(D,E) = 0
+2.6.17~2.6.18: J(E,F) = 0;
 
 # Developers work in both Merge Period and Release Period - devs_worked_in_MP_RDP.rpt
 (select author from dev_area_merge) intersect (select author from dev_area_dev);

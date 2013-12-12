@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.12)  10 DEC 2013 16:18
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.8.12)  11 DEC 2013 17:17
 entering extended mode
  %&-line parsing enabled.
 **paper1.tex
@@ -325,37 +325,37 @@ File: omsaer.fd 1999/12/27
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
 
-Overfull \hbox (5.9328pt too wide) in paragraph at lines 35--36
-\T1/aer/m/n/9 Resource Re-al-lo-ca-tion, Code Own-er-ship, De-fect Den-sity, So
-ft-
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Overfull \hbox (7.54974pt too wide) in paragraph at lines 58--60
+Overfull \hbox (7.54974pt too wide) in paragraph at lines 56--58
 \T1/aer/m/n/9 In dis-tributed de-vel-op-ment en-vi-ron-ment de-vel-op-ers work
  []
 
-[2] <gitdag.png, id=14, 479.7925pt x 439.6425pt>
+[2]
+Overfull \hbox (3.93196pt too wide) in paragraph at lines 79--80
+\T1/aer/m/n/9 max-i-mum length of in-for-ma-tion does look like \T1/aer/bx/n/9 
+linuxvA.B.C-
+ []
+
+<gitdag.png, id=14, 479.7925pt x 439.6425pt>
 File: gitdag.png Graphic file (type png)
  <use gitdag.png> [3] [4 <./gitdag.png (PNG copy)>]
-Overfull \hbox (2.84253pt too wide) in paragraph at lines 197--198
+Overfull \hbox (2.84253pt too wide) in paragraph at lines 196--197
 []\T1/aer/m/n/9 We have the com-mits con-tributed to re-leases and ev-ery recor
 d
  []
 
 
-Overfull \hbox (1.66328pt too wide) in paragraph at lines 197--198
+Overfull \hbox (1.66328pt too wide) in paragraph at lines 196--197
 \T1/aer/m/n/9 ex-plains us who com-mit-ted the file when did this get churned.
  []
 
 
-Overfull \hbox (2.38339pt too wide) in paragraph at lines 254--255
+Overfull \hbox (2.38339pt too wide) in paragraph at lines 253--254
 \T1/aer/m/n/9 com-mu-ni-ties through-out dif-fer-ent de-vel-op-ment branches. W
 e
  []
@@ -364,7 +364,7 @@ e
 File: relTimeDomain100.png Graphic file (type png)
 
 <use relTimeDomain100.png>
-Overfull \hbox (5.7164pt too wide) in paragraph at lines 291--292
+Overfull \hbox (5.7164pt too wide) in paragraph at lines 290--291
  [] 
  []
 
@@ -372,7 +372,7 @@ Overfull \hbox (5.7164pt too wide) in paragraph at lines 291--292
 File: linxrelmergfreq.png Graphic file (type png)
 
 <use linxrelmergfreq.png>
-Overfull \hbox (5.71419pt too wide) in paragraph at lines 300--301
+Overfull \hbox (5.71419pt too wide) in paragraph at lines 299--300
  [] 
  []
 
@@ -383,26 +383,26 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 <devsMPRPbox.png, id=34, 729.72626pt x 427.5975pt>
 File: devsMPRPbox.png Graphic file (type png)
  <use devsMPRPbox.png>
-Overfull \hbox (5.70969pt too wide) in paragraph at lines 318--319
+Overfull \hbox (5.70969pt too wide) in paragraph at lines 317--318
  [] 
  []
 
 <devsMPRP.png, id=35, 728.7225pt x 355.3275pt>
 File: devsMPRP.png Graphic file (type png)
  <use devsMPRP.png>
-Overfull \hbox (5.7164pt too wide) in paragraph at lines 325--326
+Overfull \hbox (5.7164pt too wide) in paragraph at lines 324--325
  [] 
  []
 
 <jdMPRP.png, id=36, 1204.5pt x 841.1425pt>
 File: jdMPRP.png Graphic file (type png)
  <use jdMPRP.png>
-Overfull \hbox (5.71107pt too wide) in paragraph at lines 338--339
+Overfull \hbox (5.71107pt too wide) in paragraph at lines 337--338
  [] 
  []
 
 
-Overfull \hbox (10.47397pt too wide) in paragraph at lines 343--343
+Overfull \hbox (10.47397pt too wide) in paragraph at lines 342--342
 []\secfnt Developers' Con-tri-bu-tions Around the Time
  []
 
@@ -414,7 +414,7 @@ File: devDistMPRPvenn.png Graphic file (type png)
 File: cumulFileOwnP.png Graphic file (type png)
 
 <use cumulFileOwnP.png>
-Overfull \hbox (5.70969pt too wide) in paragraph at lines 360--361
+Overfull \hbox (5.70969pt too wide) in paragraph at lines 359--360
  [] 
  []
 
@@ -422,7 +422,7 @@ Overfull \hbox (5.70969pt too wide) in paragraph at lines 360--361
 File: j_file_MPMPvRPRP.png Graphic file (type png)
 
 <use j_file_MPMPvRPRP.png>
-Overfull \hbox (5.70969pt too wide) in paragraph at lines 370--371
+Overfull \hbox (5.70969pt too wide) in paragraph at lines 369--370
  [] 
  []
 
@@ -450,7 +450,7 @@ fileChurnRPbox.png (PNG copy)> <./file_commit_exeptional_rp10box.png (PNG copy)
 File: jdRPChurnHighFocusFiles.png Graphic file (type png)
 
 <use jdRPChurnHighFocusFiles.png>
-Overfull \hbox (5.70969pt too wide) in paragraph at lines 467--468
+Overfull \hbox (5.70969pt too wide) in paragraph at lines 466--467
  [] 
  []
 
@@ -458,7 +458,7 @@ Overfull \hbox (5.70969pt too wide) in paragraph at lines 467--468
 File: jdRPCommitHighFocusFiles.png Graphic file (type png)
 
 <use jdRPCommitHighFocusFiles.png>
-Overfull \hbox (5.70969pt too wide) in paragraph at lines 476--477
+Overfull \hbox (5.70969pt too wide) in paragraph at lines 475--476
  [] 
  []
 
@@ -466,27 +466,27 @@ Overfull \hbox (5.70969pt too wide) in paragraph at lines 476--477
 Underfull \vbox (badness 4634) has occurred while \output is active []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--490
+Underfull \hbox (badness 10000) in paragraph at lines 483--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--490
+Underfull \hbox (badness 10000) in paragraph at lines 483--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--490
+Underfull \hbox (badness 10000) in paragraph at lines 483--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--490
+Underfull \hbox (badness 10000) in paragraph at lines 483--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--490
+Underfull \hbox (badness 10000) in paragraph at lines 483--489
 
  []
 
@@ -506,7 +506,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  3842 strings out of 493848
  48811 string characters out of 1152823
- 116437 words of memory out of 3000000
+ 115437 words of memory out of 3000000
  7031 multiletter control sequences out of 15000+50000
  54667 words of font info for 73 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
@@ -521,7 +521,7 @@ r9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl8.pfb></usr
 ts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helv
 etic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper1.pdf (13 pages, 535668 bytes).
+Output written on paper1.pdf (13 pages, 535412 bytes).
 PDF statistics:
  118 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

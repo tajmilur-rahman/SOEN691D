@@ -1,0 +1,21 @@
+1.
+Software Release Types (http://developer.teradata.com/doc/tools/ttu/install/index.jsp?topic=%2F14_00_HelpZOSDVD%2FAboutSoftwareReleaseTypes_zos.html)
+
+Table 1. Software Release Types
+Term 		Definition
+-----   	----------
+Major 		Features substantial functional enhancements to your existing software
+Minor 		Features significant, but fewer, functional enhancements to your current software
+Maintenance 	Fixes software discrepancies discovered since the current major, minor, or previous maintenance release was issued, and may include high priority enhancements
+Emergency 	A release issued in response to a specific problem that has been reported by a customer
+
+Release Types:
+--------------
+Major, minor, or maintenance release media for the Teradata Tools and Utilities software for z/OS contains the following items:
+
+    A listing file describing how to get a copy of the Teradata Tools and Utilities Release Definition from the Web
+    Teradata Tools and Utilities software for z/OS, which consists of the base release of the software and all subsequent minor or maintenance releases
+    Sample files and source code to customize the client software
+
+In contrast, emergency release media contains a smaller Release Definition and only the changes required to fix a specific problem reported by a customer.
+

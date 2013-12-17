@@ -1,17 +1,17 @@
-===SOEN691_Rupak===
-=============
-
-==scripts:==
-Containing all the sql and perl code for data extraction, analysis and reports
+==Course Title: SOEN691 DD==
+Dr. Peter C. Rigby
+Fall 2013
 
 ==paper1:==
-Containing tex file bib file and all necessary images used in the paper
+Containing images, scripts, latex, references directories for the research work for the course
 
-==images:==
-Main copies of all images found during analysis and data extraction and reports generation
-
-==Lecture:==
+==lecture:==
 Containing all the lecture materials for the course SOEN691 D
+
+==presentation==
+All the presentations given during the course
+# Other paper
+# My research paper
 
 
 

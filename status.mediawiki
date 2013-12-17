@@ -1,0 +1,94 @@
+==TODO==
+
+# Start reading Zobel and read for min 30 mins per day
+# background on releasing
+## which style of release process would you like to look at next?
+## and other references to German below
+# Start with a fresh latex template and move the new sections in 
+## only move perfected/finish
+## Flow
+
+
+==To read==
+
+# how is releasing done in different organizations
+## Clean room
+## How is it done traditionally?
+## Fogel on releasing ch 9, full freeze vs allowing devs to continue adv and disv
+# Bram 
+## 1st international workshop on release engineering (RELENG 2013)
+## here we see how Mozilla, netfixs, and other do releasing
+#Peter
+## How does releasing occur at Avaya? (Traditional)
+## How about the DND
+
+# parameters
+## how long between releases
+## is there a full stop on development while releasing is going on?
+## Continuous release/integration ...
+
+==Modifications==
+
+How are developers (re-)organized to work on the system during the RP verus the DP.
+# Files areas of the system worked on during DP and RP
+# Developers working in the DP and RP
+# Dev ownership of files during DP and RP
+## Integrators in RP vs DP developers
+
+
+==Basic parameters and release vs dev process==
+# Release process description and 
+## Describe the linux process (RQ1)
+
+# diagram of MP and RP with branches
+## DP is all the changes that are merged during MP, but can occur in parrellel to the RP 
+## RP is all the incremental releases, which is essentially feature freeze.
+
+# RQ 2 basic information about the releases
+## Timeseries, showing how regular it is, number of devs during each period (Figure 3)
+## Unlike projects that have irregular or long periods between releases, development and releasing goes on at the same time, so less likely to see RTR
+
+# RQ ? How long does it take changes to make it in
+## Figure 11
+## Definition: A commit makes it to Torvalds either during a DP or RP ... (use daniel's name for Linus' line)
+## BirdMSR?, German, Jojo (mail to commit)
+## Yujuan Jiang, Bram Adams, Daniel M. Germán: Will my patch make it? and how fast?: case study on the Linux kernel. MSR 2013: 101-110
+## Cohesive and Isolated Development with Branches. FASE 2012: 316-331
+## The promises and perils of mining git. MSR 2009: 1-10
+
+RQ How many files and devs are involved in the DP and RP
+## Figure 7 as well as Figure 4, can do wilcox test
+## Figure 2: for the periods, obviously more commits in DP than RP
+### Maybe do # of commits?? (Fig 2, but needs new X axis and why is Y axis negative!!) -- Probably going to cut so don't spend much time on this
+## ???Figure 5 to show that more changes (cut?) 
+
+
+== similarity ==
+
+RQ Similarity of files and devs in RP vs DP
+# Do the devs in DP also work in the RP
+## Similarity between devs from consectureve DP and RP (Figure TODO)
+## Do the devs who write the code also do the bug fixing (releasing of the code they wrote).
+# Files, so are the same files changed between two releases?
+## Expect: the same files in DP to be modified in RP
+## based on Jac Similarity we see that the files modified in consecutive DP and RP are similar (figure 9)
+### finding: not that similar? 
+
+== ownership ==
+
+# RQ Do developers work in the same files during DP and RP or do they re-organize themselves and fix bugs during RP
+## differentiate between integrators and developers
+### Small proporation of devs who just do integration and touch many files and do many commits during RP
+## Figure 10 shows that the files touched during the DP have a higher ownership percentage than in the RP
+## Table 6, but the discussion of how many files devs touch and how many commits they make
+
+# Large commits in development are not meaningful because
+## What do large commits tell us?: a taxonomical study of large commits, Hindle, German
+
+== focus ==
+# files that are the same in two consecutive RPs, are likely integration type files that must always be changes ... The more RP periods a file shows up in, the more likely it is an integration file
+## Figure 16
+## People tend to work on the same features over time, so it's might just be that this file is under heavy development in more than one RP
+
+
+
